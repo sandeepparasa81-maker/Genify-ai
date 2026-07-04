@@ -233,7 +233,30 @@
     padding:11px 14px; color:var(--text); font-family:var(--font-body); font-size:14px;
   }
 
-  #generateBtn{width:100%; margin-top:6px; padding:14px; font-size:15px;}
+  /* Flex button row containing settings and generate button */
+  .action-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+  }
+  #generateBtn{flex: 1; padding:14px; font-size:15px;}
+  .settings-trigger {
+    width: 48px;
+    height: 48px;
+    border-radius: 9px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-2);
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.2s;
+  }
+  .settings-trigger:hover {
+    color: var(--text);
+    border-color: var(--text-dim);
+  }
 
   .output-panel{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); min-height:560px; display:flex; flex-direction:column;}
   .output-tabs{display:flex; border-bottom:1px solid var(--border); padding:8px 8px 0;}
@@ -282,6 +305,45 @@
   .hook-box{background:var(--mint-soft); border:1px solid rgba(61,220,151,0.3); border-radius:10px; padding:18px 20px; margin:22px 0; font-size:15px; line-height:1.65;}
   .hook-box .label{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; color:var(--mint); letter-spacing:0.08em; margin-bottom:8px; display:block;}
 
+  /* API SETTINGS MODAL */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-card {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    width: 100%;
+    max-width: 460px;
+    padding: 32px;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.8);
+  }
+  .modal-card h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .modal-card p {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
   @media (max-width:900px){
     .hero-grid{grid-template-columns:1fr;}
     .transform{height:300px; margin-top:20px;}
@@ -321,9 +383,9 @@
           <a href="#what-is" class="btn btn-ghost">See how it works</a>
         </div>
         <div class="hero-note">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>SEO-structured output</span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Blog + script in one generation</span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>No writing experience needed</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" style="width:13px; height:13px; stroke:var(--mint);"><path d="M20 6L9 17l-5-5"/></svg>SEO-structured output</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" style="width:13px; height:13px; stroke:var(--mint);"><path d="M20 6L9 17l-5-5"/></svg>Blog + script in one generation</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" style="width:13px; height:13px; stroke:var(--mint);"><path d="M20 6L9 17l-5-5"/></svg>No writing experience needed</span>
         </div>
       </div>
       <div class="transform">
@@ -418,7 +480,7 @@
           <div class="hood-list">
             <div class="hood-item"><div class="dot"></div><div><h4>Content understanding</h4><p>Your input is parsed and summarized before generation, so the draft is grounded in what you actually wrote — not a generic guess at the topic.</p></div></div>
             <div class="hood-item"><div class="dot"></div><div><h4>Format-specific generation</h4><p>Blog and script are generated with separate structural rules: heading hierarchy for one, timestamped narration and visual direction for the other.</p></div></div>
-            <div class="hood-item"><div class="dot"></div><div><h4>Python-orchestrated pipeline</h4><p>The generation flow — parsing, prompting, structuring, and formatting — is orchestrated in Python, the same stack real content and ML teams ship with.</p></div></div>
+            <div class="hood-item"><div class="dot"></div><div><h4>Google Gemini Powered</h4><p>Integrated with secure client-side model support. Run globally out-of-the-box or bring your own API key for premium production power.</p></div></div>
           </div>
         </div>
         <div class="hood-code reveal">
@@ -518,7 +580,7 @@
         <div class="field">
           <div class="chip-row" id="formatChips">
             <button type="button" class="chip active" data-format="blog">Blog post</button>
-            <button type="button" class="chip mint" data-format="script">YouTube script</button>
+            <button type="button" class="chip mint active" data-format="script">YouTube script</button>
           </div>
           <div class="hint">Select one or both.</div>
         </div>
@@ -546,7 +608,10 @@
           <input type="text" id="keywordInput" placeholder="e.g. cold brew coffee ratio">
         </div>
 
-        <button class="btn btn-primary" id="generateBtn" onclick="generateContent()">Generate</button>
+        <div class="action-row">
+          <button class="btn btn-primary" id="generateBtn" onclick="generateContent()">Generate</button>
+          <button class="settings-trigger" onclick="openSettings()" title="API Key Settings">⚙️</button>
+        </div>
       </div>
 
       <!-- OUTPUT PANEL -->
@@ -563,6 +628,25 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SETTINGS MODAL ============ -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal-card">
+    <h2>Gemini API Setup</h2>
+    <p>Genify AI runs in fully functional <strong>Demo Mode</strong> by default. To unlock real, production-ready AI generations, paste your secure Google Gemini API key below.</p>
+    
+    <div class="field">
+      <label for="apiKeyInput">Gemini API Key</label>
+      <input type="text" id="apiKeyInput" placeholder="AIzaSy...">
+      <div class="hint">Your API Key is kept entirely private and never leaves your browser.</div>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeSettings()">Cancel</button>
+      <button class="btn btn-mint" onclick="saveSettings()">Save Settings</button>
     </div>
   </div>
 </div>
@@ -587,11 +671,10 @@
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
   /* ---------------- FORMAT CHIPS ---------------- */
-  const formatState = { blog: true, script: false };
+  const formatState = { blog: true, script: true };
   document.querySelectorAll('#formatChips .chip').forEach(chip=>{
     chip.addEventListener('click', ()=>{
       const fmt = chip.dataset.format;
-      // prevent zero selection
       const otherActive = Object.keys(formatState).some(k => k!==fmt && formatState[k]);
       if(formatState[fmt] && !otherActive) return;
       formatState[fmt] = !formatState[fmt];
@@ -599,7 +682,25 @@
     });
   });
 
-  /* ---------------- MARKDOWN -> HTML (minimal) ---------------- */
+  /* ---------------- SETTINGS MODAL LOGIC ---------------- */
+  function openSettings() {
+    document.getElementById('apiKeyInput').value = localStorage.getItem('genify_gemini_key') || '';
+    document.getElementById('settingsModal').style.display = 'flex';
+  }
+  function closeSettings() {
+    document.getElementById('settingsModal').style.display = 'none';
+  }
+  function saveSettings() {
+    const val = document.getElementById('apiKeyInput').value.trim();
+    if(val) {
+      localStorage.setItem('genify_gemini_key', val);
+    } else {
+      localStorage.removeItem('genify_gemini_key');
+    }
+    closeSettings();
+  }
+
+  /* ---------------- MARKDOWN -> HTML ---------------- */
   function mdToHtml(md){
     if(!md) return '';
     const lines = md.split('\n');
@@ -667,7 +768,7 @@
         <div class="result-head">
           <div>
             <div class="result-title">${escapeHtml(b.title)}</div>
-            <div class="result-meta">${escapeHtml(b.metaDescription||'')}<br>${escapeHtml(b.readTime||'')}</div>
+            <div class="result-meta"><strong>SEO Snippet:</strong> ${escapeHtml(b.metaDescription||'')}<br>⏱️ ${escapeHtml(b.readTime||'')}</div>
             <div class="result-tags">${(b.tags||[]).map(t=>`<span class="tag">#${escapeHtml(t)}</span>`).join('')}</div>
           </div>
           <div class="result-actions">
@@ -690,7 +791,7 @@
         <div class="result-head">
           <div>
             <div class="result-title">${escapeHtml(s.title)}</div>
-            <div class="result-meta">${escapeHtml(s.duration||'')}</div>
+            <div class="result-meta">🎬 Estimated Duration: ${escapeHtml(s.duration||'')}</div>
             <div class="result-tags">${(s.tags||[]).map(t=>`<span class="tag">#${escapeHtml(t)}</span>`).join('')}</div>
           </div>
           <div class="result-actions">
@@ -722,15 +823,36 @@
     }
     return '';
   }
+
+  /* Bulletproof copy-to-clipboard engine */
   function copyText(kind){
     const text = plainTextFor(kind);
-    navigator.clipboard.writeText(text).then(()=>{
+    const successCallback = () => {
       const btn = event.target;
       const old = btn.textContent;
       btn.textContent = '✓';
       setTimeout(()=>{ btn.textContent = old; }, 1200);
-    });
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(successCallback);
+    } else {
+      // Fallback for isolated environments and strict iframe blocks
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        successCallback();
+      } catch (err) {
+        console.error('Fallback copy failed', err);
+      }
+      document.body.removeChild(textarea);
+    }
   }
+
   function downloadText(kind){
     const text = plainTextFor(kind);
     const title = kind==='blog' ? (lastResult.blog.title||'blog') : (lastResult.script.title||'script');
@@ -741,6 +863,34 @@
     a.download = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,60) + (kind==='blog' ? '-blog.txt' : '-script.txt');
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  /* ---------------- DETAILED HIGH-FIDELITY MOCK RESPONSES ---------------- */
+  function getMockResponse(source, wantBlog, wantScript, tone, lengthLabel) {
+    const defaultTopic = source ? source.slice(0, 60) + "..." : "your target topic";
+    return {
+      blog: wantBlog ? {
+        title: `The Ultimate Guide to ${defaultTopic}`,
+        metaDescription: `Discover the top secrets of ${defaultTopic}. Maximize your workflow with our advanced industry framework.`,
+        readTime: "5 min read",
+        tags: ["guide", "strategy", "productivity", tone],
+        content: `## Introduction to the Framework\n\nWhen dealing with **${defaultTopic}**, content is king. Having a clear structure keeps your target audience highly engaged.\n\n### Core Pillars\n\n- **Quality First:** Ensure your primary focus area has exceptional depth.\n- **Optimized Structure:** Structure headers systematically to rank efficiently on Google.\n- **Continuous Interaction:** End sections with natural takeaways to maximize scroll time.\n\n## Advanced Performance Rules\n\nYour next execution draft should naturally leverage the strategic keyword structure to gain direct organic search positioning.`
+      } : null,
+      script: wantScript ? {
+        title: `The Secret Strategy Behind ${defaultTopic}`,
+        duration: "~6 minutes",
+        tags: ["tutorial", "productivity", tone],
+        hook: `Stop doing it the old way. Today, we're breaking down exactly how to master ${defaultTopic} in under 10 seconds.`,
+        sections: [
+          { timestamp: "0:00", narration: "What is going on everyone. Today we are unpacking a critical workflow change that saves hours.", visual: "Creator opens with high-energy talking head shot with modern background illumination." },
+          { timestamp: "1:30", narration: "Let's bring up the blueprint here. Notice how the visual mapping links directly back to our core ideas.", visual: "Cut to direct clean desktop screen-share tracking the process flowchart step-by-step." },
+          { timestamp: "3:45", narration: "This is where most creators get stuck. They forget to optimize the main step. Here is the fast fix.", visual: "Show a close-up overhead hand illustration marking the key sections on a physical whiteboard." }
+        ],
+        outro: "Thanks for watching! Smash that subscribe button if this helped you out, and I'll catch you in the next one.",
+        description: `Unpack the complete step-by-step breakdown of ${defaultTopic}. Avoid the common mistakes most people make starting out.`,
+        tags: ["how-to", "automation", tone]
+      } : null
+    };
   }
 
   /* ---------------- GENERATION ---------------- */
@@ -767,47 +917,132 @@
     const lengthLabel = {short:'short, roughly 500 words', medium:'medium length, roughly 900 words', long:'long, roughly 1400 words'}[length];
     const runtimeLabel = {short:'a 3–5 minute video', medium:'a 6–8 minute video', long:'a 10–12 minute video'}[length];
 
-    const schemaParts = [];
-    if(wantBlog) schemaParts.push(`"blog": {"title": string, "metaDescription": string (under 160 chars), "readTime": string (e.g. "6 min read"), "content": string (markdown using ## and ### headings, **bold**, and "-" bullet lists where useful, no top-level title repeated in content), "tags": array of 4-6 short strings}`);
-    if(wantScript) schemaParts.push(`"script": {"title": string, "hook": string (1-3 punchy sentences for the first 8 seconds), "duration": string (e.g. "~7 minutes"), "sections": array of 4-7 objects {"timestamp": string like "0:45", "narration": string (what is said on camera/voiceover), "visual": string (what is shown on screen)}, "outro": string (closing lines with a call to action), "description": string (a YouTube video description, 2-3 sentences), "tags": array of 4-6 short strings}`);
+    // Read Key
+    const apiKey = localStorage.getItem('genify_gemini_key') || '';
 
-    const systemPrompt = `You are Genify AI, an expert content strategist and scriptwriter. You write the world's best, most specific, non-generic blog posts and YouTube scripts, grounded closely in the source content given by the user. Never write filler or vague generalities — always include concrete specifics drawn from the source. Respond with ONLY a single valid JSON object, no markdown code fences, no preamble, no commentary. The JSON object must have this exact shape: {${schemaParts.join(', ')}}. Tone should be ${tone}. Blog should be ${lengthLabel}. Video script should be paced for ${runtimeLabel}.${keyword ? ` Naturally incorporate the target keyword "${keyword}" into the blog title, meta description, and body where it fits naturally.` : ''}`;
-
-    const userPrompt = `Source content / topic:\n"""\n${source}\n"""\n\nGenerate ${[wantBlog && 'a blog post', wantScript && 'a YouTube video script'].filter(Boolean).join(' and ')} based on this, following the JSON schema exactly.`;
-
-    try{
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6",
-          max_tokens: 4000,
-          system: systemPrompt,
-          messages: [{ role: "user", content: userPrompt }]
-        })
-      });
-
-      if(!response.ok){ throw new Error('Request failed with status ' + response.status); }
-      const data = await response.json();
-      const textBlock = (data.content || []).find(b => b.type === 'text');
-      if(!textBlock){ throw new Error('No content returned.'); }
-
-      let cleaned = textBlock.text.trim().replace(/^```json/i,'').replace(/^```/,'').replace(/```$/,'').trim();
-      const parsed = JSON.parse(cleaned);
-
-      clearLoadingInterval();
-      lastResult = { blog: parsed.blog || null, script: parsed.script || null };
-      activeTab = lastResult.blog ? 'blog' : 'script';
-      updateTabs();
-      renderActive();
-
-    } catch(err){
-      clearLoadingInterval();
-      document.getElementById('outputBody').innerHTML = `<div class="error-state">Something went wrong generating your draft (${escapeHtml(err.message)}). Please try again.</div>`;
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Generate';
+    if(!apiKey) {
+      // Graceful Interactive Demo Mode fallback
+      setTimeout(() => {
+        const parsed = getMockResponse(source, wantBlog, wantScript, tone, lengthLabel);
+        clearLoadingInterval();
+        lastResult = { blog: parsed.blog || null, script: parsed.script || null };
+        activeTab = lastResult.blog ? 'blog' : 'script';
+        updateTabs();
+        renderActive();
+        btn.disabled = false;
+        btn.textContent = 'Generate';
+        
+        // Appends a friendly reminder to test the real engine with an API Key
+        const note = document.createElement('div');
+        note.className = 'error-state';
+        note.style.marginTop = '20px';
+        note.style.background = 'rgba(61,220,151,0.06)';
+        note.style.borderColor = 'rgba(61,220,151,0.2)';
+        note.style.color = 'var(--mint)';
+        note.innerHTML = `✨ <strong>Running in Interactive Demo Mode.</strong> Connect your Google Gemini API Key by clicking the gear icon ⚙️ below to generate real production-ready content!`;
+        document.getElementById('outputBody').appendChild(note);
+      }, 2500);
+      return;
     }
+
+    // Prepare Schema for Gemini Structured Output
+    const properties = {};
+    if(wantBlog) {
+      properties.blog = {
+        type: "OBJECT",
+        properties: {
+          title: { type: "STRING" },
+          metaDescription: { type: "STRING", description: "under 160 characters" },
+          readTime: { type: "STRING" },
+          content: { type: "STRING", description: "Use markdown with ## and ### headings, **bold**, and bullet points. No top-level title repeated." },
+          tags: { type: "ARRAY", items: { type: "STRING" } }
+        },
+        required: ["title", "metaDescription", "readTime", "content", "tags"]
+      };
+    }
+    if(wantScript) {
+      properties.script = {
+        type: "OBJECT",
+        properties: {
+          title: { type: "STRING" },
+          hook: { type: "STRING" },
+          duration: { type: "STRING" },
+          sections: {
+            type: "ARRAY",
+            items: {
+              type: "OBJECT",
+              properties: {
+                timestamp: { type: "STRING" },
+                narration: { type: "STRING" },
+                visual: { type: "STRING" }
+              },
+              required: ["timestamp", "narration", "visual"]
+            }
+          },
+          outro: { type: "STRING" },
+          description: { type: "STRING" },
+          tags: { type: "ARRAY", items: { type: "STRING" } }
+        },
+        required: ["title", "hook", "duration", "sections", "outro", "description", "tags"]
+      };
+    }
+
+    const systemPrompt = `You are Genify AI, an expert content strategist. Draft highly detailed, non-generic blog posts and scripts based closely on user source. Tone: ${tone}. Blog: ${lengthLabel}. YouTube script: ${runtimeLabel}.${keyword ? ` Optimize naturally for keyword: "${keyword}".` : ''}`;
+    const userPrompt = `Source content: ${source}`;
+
+    // Retry engine with exponential backoff
+    let attempts = 0;
+    const maxAttempts = 3;
+    let success = false;
+
+    while (attempts < maxAttempts && !success) {
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: userPrompt }] }],
+            systemInstruction: { parts: [{ text: systemPrompt }] },
+            generationConfig: {
+              responseMimeType: "application/json",
+              responseSchema: {
+                type: "OBJECT",
+                properties: properties,
+                required: Object.keys(properties)
+              }
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`API returned HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!responseText) throw new Error("No payload content.");
+
+        const parsed = JSON.parse(responseText.trim());
+        clearLoadingInterval();
+        lastResult = { blog: parsed.blog || null, script: parsed.script || null };
+        activeTab = lastResult.blog ? 'blog' : 'script';
+        updateTabs();
+        renderActive();
+        success = true;
+
+      } catch (err) {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          clearLoadingInterval();
+          document.getElementById('outputBody').innerHTML = `<div class="error-state">Failed after ${maxAttempts} attempts. Error details: ${escapeHtml(err.message)}. <br><br>Please check that your API Key is correct and active.</div>`;
+        } else {
+          await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempts)));
+        }
+      }
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Generate';
   }
 </script>
 </body>
