@@ -4,43 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Genify AI — Turn one page into a blog and a script</title>
-<script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
   :root {
-    --bg: #030307;
-    --bg-2: #07070f;
-    --surface: rgba(14, 14, 25, 0.7);
-    --surface-solid: #0d0d16;
-    --surface-2: rgba(23, 23, 38, 0.85);
-    --border: rgba(245, 243, 238, 0.05);
-    --border-strong: rgba(245, 243, 238, 0.12);
-    --text: #fdfdfd;
-    --text-dim: #9ca3af;
-    --text-dimmer: #4b5563;
+    --bg: #f5f7fb;
+    --bg-2: #edf0f6;
+    --surface: rgba(255, 255, 255, 0.45);
+    --surface-solid: #ffffff;
+    --surface-2: rgba(255, 255, 255, 0.75);
+    --border: rgba(15, 23, 42, 0.08);
+    --border-strong: rgba(15, 23, 42, 0.14);
+    --text: #0f172a;
+    --text-dim: #334155;
+    --text-dimmer: #64748b;
     --accent: #ff5a36;
-    --accent-soft: rgba(255, 90, 54, 0.12);
-    --mint: #3ddc97;
-    --mint-soft: rgba(61, 220, 151, 0.12);
-    --purple: #a855f7;
-    --purple-soft: rgba(168, 85, 247, 0.12);
-    --gold: #ffd166;
+    --accent-soft: rgba(255, 90, 54, 0.09);
+    --mint: #059669;
+    --mint-soft: rgba(5, 150, 105, 0.09);
+    --purple: #7c3aed;
+    --purple-soft: rgba(124, 58, 237, 0.09);
+    --gold: #d97706;
     --radius: 18px;
     --font-display: 'Fraunces', serif;
     --font-body: 'Space Grotesk', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 
-  /* Custom palette themes */
+  /* Theme adjustments */
   [data-theme="purple"] {
-    --accent: #a855f7;
-    --accent-soft: rgba(168, 85, 247, 0.12);
+    --accent: #7c3aed;
+    --accent-soft: rgba(124, 58, 237, 0.09);
   }
   [data-theme="mint"] {
-    --accent: #3ddc97;
-    --accent-soft: rgba(61, 220, 151, 0.12);
+    --accent: #059669;
+    --accent-soft: rgba(5, 150, 105, 0.09);
   }
 
   * {
@@ -61,25 +60,11 @@
     overflow-x: hidden;
   }
   ::selection {
-    background: var(--accent);
-    color: #030307;
+    background: var(--accent-soft);
+    color: var(--text);
   }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--bg-2);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--border-strong);
-    border-radius: 99px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--accent);
-  }
-
+  /* Multi-colored pastel ambient background meshes for premium light theme */
   .ambient-mesh {
     position: fixed;
     top: -10%;
@@ -87,61 +72,38 @@
     width: 120%;
     height: 120%;
     background-image: 
-      radial-gradient(circle at 15% 15%, rgba(255, 90, 54, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.06) 0%, transparent 45%),
-      radial-gradient(circle at 50% 80%, rgba(61, 220, 151, 0.05) 0%, transparent 50%);
+      radial-gradient(circle at 15% 15%, rgba(255, 90, 54, 0.12) 0%, transparent 45%),
+      radial-gradient(circle at 85% 20%, rgba(124, 58, 237, 0.12) 0%, transparent 45%),
+      radial-gradient(circle at 50% 80%, rgba(5, 150, 105, 0.11) 0%, transparent 50%);
     pointer-events: none;
     z-index: -1;
   }
 
+  /* Frosted white glass cards */
   .glass-card {
     background: var(--surface);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border);
+    backdrop-filter: blur(20px) saturate(190%);
+    -webkit-backdrop-filter: blur(20px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: var(--radius);
+    box-shadow: 
+      0 10px 30px -10px rgba(15, 23, 42, 0.04),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
     transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
   }
   .glass-card:hover {
     border-color: var(--border-strong);
     background: var(--surface-2);
-    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.4);
+    box-shadow: 
+      0 20px 40px -15px rgba(15, 23, 42, 0.08),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
   }
 
-  .interactive-glow:hover {
-    box-shadow: 0 0 30px -5px var(--accent-soft);
-  }
-
-  /* Animated glowing indicators */
-  .glow-dot {
-    position: relative;
-    width: 8px;
-    height: 8px;
-    background-color: var(--accent);
-    border-radius: 50%;
-  }
-  .glow-dot::after {
-    content: '';
-    position: absolute;
-    top: -4px; left: -4px; right: -4px; bottom: -4px;
-    border-radius: 50%;
-    border: 1px solid var(--accent);
-    animation: glow-pulse 2s infinite ease-out;
-  }
-  @keyframes glow-pulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(2.4); opacity: 0; }
-  }
-
-  .display-font {
-    font-family: var(--font-display);
-  }
-  .mono-font {
-    font-family: var(--font-mono);
-  }
+  .display-font { font-family: var(--font-display); }
+  .mono-font { font-family: var(--font-mono); }
 
   .gradient-text {
-    background: linear-gradient(135deg, #ffffff 0%, var(--text-dim) 100%);
+    background: linear-gradient(135deg, var(--text) 0%, var(--text-dimmer) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -164,11 +126,50 @@
     transform: translateY(0);
   }
 
-  /* Premium buttons and input tags */
+  /* Floating active assets visual */
+  .transform-container { position: relative; height: 440px; }
+  .t-card {
+    position: absolute; width: 230px; background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.8);
+    border-radius: var(--radius); padding: 16px 18px; box-shadow: 0 30px 60px -30px rgba(15,23,42,0.15);
+  }
+  .t-label { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dimmer); margin-bottom: 10px; display: flex; justify-content: space-between; }
+  .t-line { height: 8px; border-radius: 4px; background: var(--border-strong); margin-bottom: 7px; }
+  
+  .t-input { top: 6px; left: 0; animation: floatA 6s ease-in-out infinite; }
+  .t-input .t-line:nth-child(2) { width: 92%; }
+  .t-input .t-line:nth-child(3) { width: 74%; }
+  .t-input .t-line:nth-child(4) { width: 85%; }
+  
+  .t-blog { top: 20px; right: 0; border-color: rgba(255, 90, 54, 0.3); animation: floatB 6s ease-in-out infinite; animation-delay: 0.3s; }
+  .t-blog .t-line { background: rgba(255, 90, 54, 0.22); }
+  .t-blog .t-line:nth-child(2) { width: 100%; }
+  .t-blog .t-line:nth-child(3) { width: 88%; }
+  .t-blog .t-line:nth-child(4) { width: 95%; }
+
+  .t-script { bottom: 10px; right: 30px; border-color: rgba(5, 150, 105, 0.3); animation: floatC 6s ease-in-out infinite; animation-delay: 0.6s; }
+  .t-script .t-line { background: rgba(5, 150, 105, 0.2); }
+  .t-script .t-line:nth-child(2) { width: 70%; }
+  .t-script .t-line:nth-child(3) { width: 96%; }
+
+  .t-pulse { position: absolute; top: 120px; left: 210px; width: 120px; height: 2px; background: linear-gradient(90deg, var(--border-strong), var(--accent)); overflow: hidden; }
+  .t-pulse::after { content: ''; position: absolute; top: -2px; left: -20px; width: 20px; height: 6px; border-radius: 3px; background: var(--gold); filter: blur(1px); animation: pulseMove 2.2s linear infinite; }
+
+  @keyframes floatA { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes floatB { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  @keyframes floatC { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes pulseMove { 0% { left: -20px; } 100% { left: 140px; } }
+
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); display: flex; align-items: center; gap: 10px; font-weight: 600;
+  }
+  .eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+
+  /* Premium interactive buttons */
   .premium-btn {
     position: relative;
     background: var(--text);
-    color: #030307;
+    color: #ffffff;
     font-weight: 600;
     border-radius: 10px;
     padding: 12px 24px;
@@ -180,34 +181,17 @@
   }
   .premium-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px -10px rgba(255,255,255,0.15);
+    box-shadow: 0 12px 24px -10px rgba(15, 23, 42, 0.15);
   }
-  .premium-btn:active {
-    transform: translateY(0);
-  }
-
-  .premium-btn-accent {
-    background: var(--accent);
-    color: #030307;
-  }
-  .premium-btn-accent:hover {
-    box-shadow: 0 12px 24px -10px var(--accent-soft);
-    background: #ff7152;
-  }
-
-  .premium-btn-ghost {
-    background: transparent;
-    border: 1px solid var(--border-strong);
-    color: var(--text);
-  }
-  .premium-btn-ghost:hover {
-    background: var(--border);
-    border-color: var(--text-dim);
-  }
+  .premium-btn:active { transform: translateY(0); }
+  .premium-btn-accent { background: var(--accent); color: #ffffff; }
+  .premium-btn-accent:hover { box-shadow: 0 12px 24px -10px var(--accent-soft); background: #ff5e36; }
+  .premium-btn-ghost { background: rgba(255, 255, 255, 0.6); border: 1px solid var(--border-strong); color: var(--text); }
+  .premium-btn-ghost:hover { background: rgba(255, 255, 255, 0.95); border-color: var(--text-dim); }
 
   .workspace-input {
     width: 100%;
-    background: rgba(7, 7, 15, 0.8);
+    background: rgba(255, 255, 255, 0.7);
     border: 1px solid var(--border-strong);
     border-radius: 10px;
     padding: 14px 16px;
@@ -222,53 +206,44 @@
     box-shadow: 0 0 0 4px var(--accent-soft);
   }
 
-  /* Interactive visual hero pipeline */
-  .visual-node {
-    position: relative;
-    width: 240px;
-    height: 120px;
+  .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    padding: 9px 15px; border-radius: 8px; border: 1px solid var(--border-strong); background: rgba(255, 255, 255, 0.5);
+    font-size: 13.5px; color: var(--text-dim); transition: all .15s;
   }
-  .visual-cable {
-    position: absolute;
-    background: linear-gradient(90deg, var(--border-strong), var(--accent));
-    height: 1px;
-    overflow: hidden;
-  }
-  .visual-pulse {
-    position: absolute;
-    top: -1px;
-    left: 0;
-    width: 24px;
-    height: 3px;
-    background: var(--gold);
-    border-radius: 2px;
-    filter: blur(1px);
-    animation: flow-run 2.4s linear infinite;
-  }
-  @keyframes flow-run {
-    0% { left: -10%; }
-    100% { left: 110%; }
-  }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: #ffffff; font-weight: 600; }
+  .chip.active.mint { background: var(--mint); border-color: var(--mint); }
+  .chip:hover:not(.active) { border-color: var(--text-dimmer); color: var(--text); }
+
+  /* Custom output sections */
+  .script-section { border-left: 2px solid var(--border-strong); padding: 4px 0 20px 22px; margin-bottom: 4px; position: relative; }
+  .script-section::before { content: ''; position: absolute; left: -5px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--mint); }
+  .script-timestamp { font-family: var(--font-mono); font-size: 12px; color: var(--mint); margin-bottom: 8px; font-weight: 600; }
+  .script-narration { font-size: 15px; line-height: 1.7; margin-bottom: 8px; color: var(--text-dim); }
+  .script-visual { font-size: 12.5px; color: var(--text-dimmer); font-style: italic; }
+  .script-visual::before { content: '🎬 '; }
+  
+  .hook-box { background: var(--accent-soft); border: 1px solid rgba(255,90,54,0.2); border-radius: 10px; padding: 18px 20px; margin: 22px 0; font-size: 15px; line-height: 1.65; }
+  .hook-box .label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 8px; display: block; font-weight: 600; }
 </style>
 </head>
-<body class="selection:bg-orange-500 selection:text-black">
+<body>
 
-<!-- Radial mesh backing light -->
 <div class="ambient-mesh"></div>
 
 <!-- ============ HOME VIEW ============ -->
 <div class="view-home" id="viewHome">
-  <header class="fixed top-0 left-0 right-0 z-50 bg-[#030307]/60 backdrop-blur-md border-b border-white/[0.04]">
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#f5f7fb]/60 backdrop-blur-md border-b border-black/[0.04]">
     <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 sm:px-8">
       <div class="logo flex items-center gap-3 display-font font-bold text-xl tracking-tight">
-        <span class="logo-mark w-8 h-8 rounded-lg bg-gradient-to-tr from-[#ff5a36] to-[#ffd166] flex items-center justify-center font-mono text-xs font-extrabold text-[#030307] shadow-lg shadow-orange-500/20">G</span> 
+        <span class="logo-mark w-8 h-8 rounded-lg bg-gradient-to-tr from-[#ff5a36] to-[#d97706] flex items-center justify-center font-mono text-xs font-extrabold text-white shadow-lg">G</span> 
         Genify AI
       </div>
-      <nav class="hidden md:flex items-center gap-10 text-[14px] text-gray-400 font-medium">
-        <a href="#what-is" class="hover:text-white transition-colors">Platform</a>
-        <a href="#how" class="hover:text-white transition-colors">How it Works</a>
-        <a href="#hood" class="hover:text-white transition-colors">Architecture</a>
-        <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+      <nav class="hidden md:flex items-center gap-10 text-[14.5px] text-slate-600 font-medium">
+        <a href="#what-is" class="hover:text-black transition-colors">Platform</a>
+        <a href="#how" class="hover:text-black transition-colors">How it Works</a>
+        <a href="#hood" class="hover:text-black transition-colors">Architecture</a>
+        <a href="#pricing" class="hover:text-black transition-colors">Pricing</a>
       </nav>
       <button class="premium-btn premium-btn-accent text-sm" onclick="showApp()">
         Launch Workspace <span class="font-mono text-xs">→</span>
@@ -279,80 +254,86 @@
   <section class="pt-40 pb-24 relative px-6 sm:px-8 max-w-7xl mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
       <div class="lg:col-span-7 space-y-8">
-        <div class="eyebrow inline-flex">AI CONTENT DEPLOYMENT HUB</div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 border border-black/[0.05] text-[11px] font-mono font-medium tracking-wider text-slate-600">
+          <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span> AI CONTENT DEPLOYMENT HUB
+        </div>
         <h1 class="display-font text-5xl sm:text-7xl font-bold leading-[1.08] tracking-tight">
-          Turn one page into a <br><em class="accent-gradient-text not-italic">blog, script, & visual assets.</em>
+          Turn one page into a <br><em class="accent-gradient-text not-italic">blog, script, & social assets.</em>
         </h1>
-        <p class="text-gray-400 text-lg sm:text-xl max-w-xl font-normal leading-relaxed">
-          Provide website content, specification notes, or campaign targets. Genify AI splits your pipeline, concurrently drafting optimized SEO articles, YouTube visual scripts, and high-quality graphics.
+        <p class="text-slate-600 text-lg sm:text-xl max-w-xl font-normal leading-relaxed">
+          Provide website content, documentation, or campaign targets. Genify AI splits your pipeline, concurrently drafting optimized SEO articles, visual scripts, and high-impact social distributions.
         </p>
         <div class="flex flex-wrap gap-4 pt-2">
           <button class="premium-btn premium-btn-accent text-sm" onclick="showApp()">Get Started For Free</button>
           <a href="#what-is" class="premium-btn premium-btn-ghost text-sm">Explore Capabilities</a>
         </div>
-        <div class="flex flex-wrap gap-8 text-xs text-gray-500 font-mono pt-4 border-t border-white/[0.05]">
-          <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#3ddc97]"></span>SEO-Engine Integrated</span>
-          <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#3ddc97]"></span>Real-Time Audio TTS Preview</span>
-          <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#3ddc97]"></span>Procedural Artwork Blueprinting</span>
+        <div class="flex flex-wrap gap-8 text-xs text-slate-500 font-mono pt-4 border-t border-black/[0.05]">
+          <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#059669]"></span>SEO-Engine Integrated</span>
+          <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#059669]"></span>Real-Time Audio TTS</span>
+          <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#059669]"></span>Netlify Ready Workspace</span>
         </div>
       </div>
       
-      <!-- Interactive high-tech spatial visualization mockup -->
-      <div class="lg:col-span-5 relative h-[380px] sm:h-[440px] flex items-center justify-center">
-        <div class="absolute w-72 glass-card p-6 accent-glow -rotate-6 -translate-x-12 -translate-y-12 border-[#ff5a36]/20">
-          <div class="flex justify-between items-center text-[10px] text-gray-500 font-mono mb-3"><span>CAMPAIGN SOURCE</span><span>1.8 KB</span></div>
-          <div class="h-2.5 bg-[#ff5a36]/20 w-4/5 rounded mb-2"></div>
-          <div class="h-2 bg-gray-700/30 w-full rounded mb-2"></div>
-          <div class="h-2 bg-gray-700/30 w-2/3 rounded"></div>
-        </div>
-        <div class="absolute w-72 glass-card p-6 rotate-6 translate-x-12 translate-y-12 border-[#3ddc97]/20">
-          <div class="flex justify-between items-center text-[10px] text-gray-500 font-mono mb-3"><span>PRODUCTION PIPELINE</span><span>DEPLOYED</span></div>
-          <div class="h-2.5 bg-[#3ddc97]/20 w-1/2 rounded mb-2"></div>
-          <div class="h-2 bg-gray-700/30 w-full rounded mb-2"></div>
-          <div class="h-2 bg-gray-700/30 w-4/5 rounded"></div>
+      <div class="lg:col-span-5">
+        <div class="transform-container">
+          <div class="t-card t-input">
+            <div class="t-label"><span>YOUR CONTENT</span><span>.txt</span></div>
+            <div class="t-line" style="width:60%"></div><div class="t-line"></div><div class="t-line"></div><div class="t-line"></div><div class="t-line"></div>
+          </div>
+          <div class="t-pulse"></div>
+          <div class="t-card t-blog">
+            <div class="t-label"><span>BLOG POST</span><span>generated</span></div>
+            <div class="t-line" style="width:50%"></div><div class="t-line"></div><div class="t-line"></div><div class="t-line"></div><div class="t-line"></div>
+          </div>
+          <div class="t-card t-script">
+            <div class="t-label"><span>YT SCRIPT</span><span>generated</span></div>
+            <div class="t-line" style="width:45%"></div><div class="t-line"></div><div class="t-line"></div><div class="t-line"></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Product Pipeline Section -->
-  <section id="what-is" class="border-t border-white/[0.05] py-28 px-6 sm:px-8">
+  <section id="what-is" class="border-t border-black/[0.05] py-28 px-6 sm:px-8">
     <div class="max-w-7xl mx-auto">
       <div class="max-w-2xl mb-20 reveal">
-        <div class="eyebrow mb-4">THE PLATFORM BLUEPRINT</div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 border border-black/[0.05] text-[11px] font-mono font-medium tracking-wider text-slate-600 mb-4">
+          <span class="w-2 h-2 rounded-full bg-orange-500"></span> THE PLATFORM BLUEPRINT
+        </div>
         <h2 class="display-font text-4xl sm:text-5xl font-bold">Unify your publishing channels.</h2>
-        <p class="text-gray-400 mt-4 text-base sm:text-lg leading-relaxed">
-          Creating high-quality content formats is incredibly fragmented. Genify AI handles the multi-channel mapping. Seed a single note and generate perfectly formatted products optimized for specific web structures.
+        <p class="text-slate-600 mt-4 text-base sm:text-lg leading-relaxed">
+          Creating high-quality content formats is fragmented. Genify AI handles the multi-channel mapping. Seed a single note and generate perfectly formatted products optimized for specific web structures.
         </p>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="glass-card p-8 border border-white/[0.04]">
+        <div class="glass-card p-8">
           <div class="text-3xl mb-5">📝</div>
           <h3 class="font-bold text-lg mb-2">SEO Article Generator</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">
+          <p class="text-sm text-slate-600 leading-relaxed">
             Beautiful structured markdown documents designed for high readability, easy scanning, and immediate CMS integration.
           </p>
         </div>
-        <div class="glass-card p-8 border border-white/[0.04]">
+        <div class="glass-card p-8">
           <div class="text-3xl mb-5">🎬</div>
-          <h3 class="font-bold text-lg mb-2">YT visual Script</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">
-            Narrations alongside visual frame descriptions, estimated timings, and optimized hooks to capture the first 8 seconds.
+          <h3 class="font-bold text-lg mb-2">YT Visual Script</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Narrations alongside visual frame descriptions, estimated timings, and optimized hooks to capture audience interest.
           </p>
         </div>
-        <div class="glass-card p-8 border border-white/[0.04]">
+        <div class="glass-card p-8">
           <div class="text-3xl mb-5">📱</div>
-          <h3 class="font-bold text-lg mb-2">Social distribution</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">
-            Ready-to-post Twitter/X threads and deep LinkedIn statuses optimized for professional engagement rates.
+          <h3 class="font-bold text-lg mb-2">Social Distribution</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Ready-to-post Twitter/X threads and LinkedIn statuses optimized for professional and community engagement.
           </p>
         </div>
-        <div class="glass-card p-8 border border-white/[0.04]">
+        <div class="glass-card p-8">
           <div class="text-3xl mb-5">🎨</div>
           <h3 class="font-bold text-lg mb-2">Generative Media</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">
-            Direct high-fidelity graphic creation with Google Imagen 4 or responsive procedural vector art blueprint canvas fallbacks.
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Bespoke light-mode vector abstractions and banner structures drawn programmatically based on your content keyword.
           </p>
         </div>
       </div>
@@ -360,72 +341,76 @@
   </section>
 
   <!-- How it works -->
-  <section id="how" class="border-t border-white/[0.05] py-28 px-6 sm:px-8 bg-gradient-to-b from-transparent to-[#07070f]/40">
+  <section id="how" class="border-t border-black/[0.05] py-28 px-6 sm:px-8 bg-gradient-to-b from-transparent to-[#ffffff]/40">
     <div class="max-w-7xl mx-auto">
       <div class="max-w-2xl mb-16 reveal">
-        <div class="eyebrow mb-4">EXECUTION PIPELINE</div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 border border-black/[0.05] text-[11px] font-mono font-medium tracking-wider text-slate-600 mb-4">
+          <span class="w-2 h-2 rounded-full bg-orange-500"></span> EXECUTION PIPELINE
+        </div>
         <h2 class="display-font text-4xl sm:text-5xl font-bold">Fast. Secure. Integrated.</h2>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div class="space-y-4">
-          <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-xs font-bold text-gray-400 font-mono">01</div>
+          <div class="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-xs font-bold text-slate-600 font-mono">01</div>
           <h3 class="font-bold text-lg">Input Campaign Data</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">Paste existing documentation copy, quick notepad guidelines, or campaign target definitions directly into the editor.</p>
+          <p class="text-sm text-slate-600 leading-relaxed">Paste existing documentation copy, quick notepad guidelines, or campaign target definitions directly into the editor.</p>
         </div>
         <div class="space-y-4">
-          <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-xs font-bold text-gray-400 font-mono">02</div>
+          <div class="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-xs font-bold text-slate-600 font-mono">02</div>
           <h3 class="font-bold text-lg">Adjust Brand Presets</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">Choose precise linguistic translation preferences, customized voice tones, target length matrices, and keyword maps.</p>
+          <p class="text-sm text-slate-600 leading-relaxed">Choose precise linguistic translation preferences, voice tones, target length matrices, and keyword maps.</p>
         </div>
         <div class="space-y-4">
-          <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-xs font-bold text-gray-400 font-mono">03</div>
+          <div class="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-xs font-bold text-slate-600 font-mono">03</div>
           <h3 class="font-bold text-lg">Deploy Content Engine</h3>
-          <p class="text-sm text-gray-400 leading-relaxed">Extract generated markdown texts, speech timelines, cross-network social configurations, and matching custom visual assets.</p>
+          <p class="text-sm text-slate-600 leading-relaxed">Extract generated markdown texts, speech timelines, cross-network social configurations, and matching custom visual assets.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Under the hood -->
-  <section id="hood" class="border-t border-white/[0.05] py-28 px-6 sm:px-8">
+  <section id="hood" class="border-t border-black/[0.05] py-28 px-6 sm:px-8">
     <div class="max-w-7xl mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
         <div class="lg:col-span-6 space-y-6">
-          <div class="eyebrow">DEVELOPER PIPELINE</div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 border border-black/[0.05] text-[11px] font-mono font-medium tracking-wider text-slate-600">
+            <span class="w-2 h-2 rounded-full bg-orange-500"></span> DEVELOPER PIPELINE
+          </div>
           <h2 class="display-font text-4xl font-bold">Structured client execution.</h2>
           <div class="space-y-4 pt-4">
             <div class="flex gap-4">
-              <span class="w-2 h-2 rounded-full bg-[#3ddc97] mt-2 flex-shrink-0"></span>
+              <span class="w-2 h-2 rounded-full bg-[#059669] mt-2 flex-shrink-0"></span>
               <div>
-                <h4 class="font-bold text-base">Direct Gemini Core Integration</h4>
-                <p class="text-sm text-gray-400 mt-1">Directly coordinates system directions and responses locally using high-fidelity schema formats.</p>
+                <h4 class="font-bold text-base">Client-Side Gemini Auto-Failover</h4>
+                <p class="text-sm text-slate-600 mt-1">Directly coordinates system directions locally using direct CORS-friendly endpoints with automatic fallbacks.</p>
               </div>
             </div>
             <div class="flex gap-4">
-              <span class="w-2 h-2 rounded-full bg-[#3ddc97] mt-2 flex-shrink-0"></span>
+              <span class="w-2 h-2 rounded-full bg-[#059669] mt-2 flex-shrink-0"></span>
               <div>
-                <h4 class="font-bold text-base">Local State Preservation</h4>
-                <p class="text-sm text-gray-400 mt-1">Generates structural storage nodes locally inside browser spaces, avoiding cloud dependency leaks.</p>
+                <h4 class="font-bold text-base">Netlify Deployment Ready</h4>
+                <p class="text-sm text-slate-600 mt-1">Generates pure static files without heavy backends, making it extremely cost-efficient and secure.</p>
               </div>
             </div>
           </div>
         </div>
         
         <div class="lg:col-span-6">
-          <div class="glass-card p-6 font-mono text-xs text-gray-400 border border-white/[0.05] overflow-x-auto bg-black/60 shadow-2xl">
-            <div class="flex items-center justify-between pb-4 border-b border-white/[0.05] mb-4 text-[10px] text-gray-600">
+          <div class="glass-card p-6 font-mono text-xs text-slate-600 border border-black/[0.05] overflow-x-auto bg-white/80 shadow-2xl">
+            <div class="flex items-center justify-between pb-4 border-b border-black/[0.05] mb-4 text-[10px] text-slate-400">
               <span>WORKSPACE_ENGINE.py</span>
-              <span class="text-orange-500">ACTIVE</span>
+              <span class="text-orange-600 font-semibold animate-pulse">ACTIVE</span>
             </div>
-            <p><span class="text-pink-500">class</span> <span class="text-cyan-400">GenifyCore</span>:</p>
-            <p class="pl-4"><span class="text-pink-500">def</span> <span class="text-cyan-400">__init__</span>(<span class="text-orange-400">self</span>, apiKey):</p>
-            <p class="pl-8"><span class="text-orange-400">self</span>.api = apiKey</p>
-            <p class="pl-8"><span class="text-orange-400">self</span>.model = <span class="text-green-300">"gemini-2.5-flash"</span></p>
-            <p class="pl-4 pt-2"><span class="text-pink-500">def</span> <span class="text-cyan-400">run_pipeline</span>(<span class="text-orange-400">self</span>, params):</p>
-            <p class="pl-8"><span class="text-pink-500">return</span> {</p>
-            <p class="pl-12"><span class="text-green-300">"blog"</span>: <span class="text-orange-400">self</span>.create_blog(params),</p>
-            <p class="pl-12"><span class="text-green-300">"script"</span>: <span class="text-orange-400">self</span>.create_script(params)</p>
+            <p><span class="text-rose-600 font-semibold">class</span> <span class="text-violet-600 font-semibold">GenifyCore</span>:</p>
+            <p class="pl-4"><span class="text-rose-600 font-semibold">def</span> <span class="text-violet-600 font-semibold">__init__</span>(<span class="text-amber-600 font-semibold">self</span>, apiKey):</p>
+            <p class="pl-8"><span class="text-amber-600 font-semibold">self</span>.api = apiKey</p>
+            <p class="pl-8"><span class="text-amber-600 font-semibold">self</span>.model = <span class="text-[#059669] font-medium">"gemini-2.5-flash"</span></p>
+            <p class="pl-4 pt-2"><span class="text-rose-600 font-semibold">def</span> <span class="text-violet-600 font-semibold">run_pipeline</span>(<span class="text-amber-600 font-semibold">self</span>, params):</p>
+            <p class="pl-8"><span class="text-rose-600 font-semibold">return</span> {</p>
+            <p class="pl-12"><span class="text-[#059669] font-medium">"blog"</span>: <span class="text-amber-600 font-semibold">self</span>.create_blog(params),</p>
+            <p class="pl-12"><span class="text-[#059669] font-medium">"script"</span>: <span class="text-amber-600 font-semibold">self</span>.create_script(params)</p>
             <p class="pl-8">}</p>
           </div>
         </div>
@@ -434,52 +419,54 @@
   </section>
 
   <!-- Pricing -->
-  <section id="pricing" class="border-t border-white/[0.05] py-28 px-6 sm:px-8 bg-gradient-to-b from-transparent to-[#07070f]/40">
+  <section id="pricing" class="border-t border-black/[0.05] py-28 px-6 sm:px-8 bg-gradient-to-b from-transparent to-[#ffffff]/40">
     <div class="max-w-7xl mx-auto">
       <div class="text-center max-w-2xl mx-auto mb-20 reveal">
-        <div class="eyebrow justify-center mb-4">PRICING</div>
+        <div class="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-white/60 border border-black/[0.05] text-[11px] font-mono font-medium tracking-wider text-slate-600 mb-4">
+          <span class="w-2 h-2 rounded-full bg-orange-500"></span> PRICING
+        </div>
         <h2 class="display-font text-4xl sm:text-5xl font-bold">Unparalleled utility models.</h2>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="glass-card p-10 border border-white/[0.05] flex flex-col justify-between">
+        <div class="glass-card p-10 flex flex-col justify-between">
           <div>
             <h3 class="font-bold text-xl mb-1">Sandbox Starter</h3>
-            <div class="display-font text-4xl font-bold my-4">$0 <span class="text-xs text-gray-500 font-normal">/ month</span></div>
-            <p class="text-sm text-gray-400 mb-8 leading-relaxed">Perfect for test-driving premium layouts and running offline simulation frameworks.</p>
-            <ul class="text-xs text-gray-400 space-y-4 mb-8">
-              <li class="flex items-center gap-2"><span class="text-[#3ddc97]">✔</span> Unlimited sandbox generations</li>
-              <li class="flex items-center gap-2"><span class="text-[#3ddc97]">✔</span> Full procedural media Canvas</li>
-              <li class="flex items-center gap-2"><span class="text-[#3ddc97]">✔</span> TTS Audio Player preview</li>
+            <div class="display-font text-4xl font-bold my-4">$0 <span class="text-xs text-slate-500 font-normal">/ month</span></div>
+            <p class="text-sm text-slate-600 mb-8 leading-relaxed">Perfect for test-driving premium layouts and running offline simulation frameworks.</p>
+            <ul class="text-xs text-slate-600 space-y-4 mb-8">
+              <li class="flex items-center gap-2"><span class="text-[#059669]">✔</span> Unlimited sandbox generations</li>
+              <li class="flex items-center gap-2"><span class="text-[#059669]">✔</span> Full procedural media Canvas</li>
+              <li class="flex items-center gap-2"><span class="text-[#059669]">✔</span> TTS Audio Player preview</li>
             </ul>
           </div>
           <button class="premium-btn premium-btn-ghost w-full text-center text-sm" onclick="showApp()">Get Started</button>
         </div>
         
         <div class="glass-card p-10 border-[#ff5a36]/30 flex flex-col justify-between bg-gradient-to-b from-[#ff5a36]/5 to-transparent relative">
-          <div class="absolute top-0 right-8 -translate-y-1/2 bg-[#ff5a36] text-[#030307] text-[10px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-lg">POPULAR</div>
+          <div class="absolute top-0 right-8 -translate-y-1/2 bg-[#ff5a36] text-white text-[10px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-lg">POPULAR</div>
           <div>
             <h3 class="font-bold text-xl mb-1">Pro Publisher</h3>
-            <div class="display-font text-4xl font-bold my-4">$24 <span class="text-xs text-gray-500 font-normal">/ month</span></div>
-            <p class="text-sm text-gray-400 mb-8 leading-relaxed">Designed for professional content teams and active daily workflows requiring live APIs.</p>
-            <ul class="text-xs text-gray-400 space-y-4 mb-8">
-              <li class="flex items-center gap-2"><span class="text-[#3ddc97]">✔</span> Direct Gemini Live integration</li>
-              <li class="flex items-center gap-2"><span class="text-[#3ddc97]">✔</span> Google Imagen 4 Media production</li>
-              <li class="flex items-center gap-2"><span class="text-[#3ddc97]">✔</span> Custom local history vault</li>
+            <div class="display-font text-4xl font-bold my-4">$24 <span class="text-xs text-slate-500 font-normal">/ month</span></div>
+            <p class="text-sm text-slate-600 mb-8 leading-relaxed">Designed for professional content teams and active daily workflows requiring live APIs.</p>
+            <ul class="text-xs text-slate-600 space-y-4 mb-8">
+              <li class="flex items-center gap-2"><span class="text-[#059669]">✔</span> Direct Gemini Live integration</li>
+              <li class="flex items-center gap-2"><span class="text-[#059669]">✔</span> Google Imagen 4 Media production</li>
+              <li class="flex items-center gap-2"><span class="text-[#059669]">✔</span> Custom local history vault</li>
             </ul>
           </div>
           <button class="premium-btn premium-btn-accent w-full text-center text-sm" onclick="showApp()">Get Started</button>
         </div>
         
-        <div class="glass-card p-10 border border-white/[0.05] flex flex-col justify-between">
+        <div class="glass-card p-10 flex flex-col justify-between">
           <div>
             <h3 class="font-bold text-xl mb-1">SaaS Enterprise</h3>
-            <div class="display-font text-4xl font-bold my-4">$79 <span class="text-xs text-gray-500 font-normal">/ month</span></div>
-            <p class="text-sm text-gray-400 mb-8 leading-relaxed">Bespoke integrations, priority API queues, and shared corporate tone parameters.</p>
-            <ul class="text-xs text-gray-400 space-y-4 mb-8">
-              <li class="flex items-center gap-2"><span class="text-[#3ddc97]">✔</span> Everything in Pro Plan</li>
-              <li class="flex items-center gap-2"><span class="text-[#3ddc97]">✔</span> Custom response schemas</li>
-              <li class="flex items-center gap-2"><span class="text-[#3ddc97]">✔</span> Concurrent queue pipelines</li>
+            <div class="display-font text-4xl font-bold my-4">$79 <span class="text-xs text-slate-500 font-normal">/ month</span></div>
+            <p class="text-sm text-slate-600 mb-8 leading-relaxed">Bespoke integrations, priority API queues, and shared corporate tone parameters.</p>
+            <ul class="text-xs text-slate-600 space-y-4 mb-8">
+              <li class="flex items-center gap-2"><span class="text-[#059669]">✔</span> Everything in Pro Plan</li>
+              <li class="flex items-center gap-2"><span class="text-[#059669]">✔</span> Custom response schemas</li>
+              <li class="flex items-center gap-2"><span class="text-[#059669]">✔</span> Concurrent queue pipelines</li>
             </ul>
           </div>
           <button class="premium-btn premium-btn-ghost w-full text-center text-sm" onclick="showApp()">Get Started</button>
@@ -488,46 +475,49 @@
     </div>
   </section>
 
-  <!-- Footer block -->
-  <footer class="border-t border-white/[0.05] py-16 px-6 sm:px-8">
+  <footer class="border-t border-black/[0.05] py-16 px-6 sm:px-8">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="logo flex items-center gap-3 display-font font-bold text-lg">
-        <span class="logo-mark w-7 h-7 rounded-lg bg-gradient-to-tr from-[#ff5a36] to-[#ffd166] flex items-center justify-center font-mono text-xs font-extrabold text-[#030307]">G</span> 
+        <span class="logo-mark w-7 h-7 rounded bg-gradient-to-tr from-[#ff5a36] to-[#d97706] flex items-center justify-center font-mono text-xs font-extrabold text-white">G</span> 
         Genify AI
       </div>
-      <div class="text-xs text-gray-500 font-mono">© 2026 Genify AI. Designed for high-frequency publishing workflows.</div>
+      <div class="text-xs text-slate-500 font-mono">© 2026 Genify AI. Optimized for high-frequency publishing workflows on Netlify.</div>
     </div>
   </footer>
 </div>
 
 <!-- ============ APP VIEW ============ -->
 <div class="view-app hidden min-h-screen pb-24" id="viewApp">
-  <!-- Top workspace navigation -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-[#030307]/85 backdrop-blur-md border-b border-white/[0.04]">
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#f5f7fb]/85 backdrop-blur-md border-b border-black/[0.04]">
     <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-      <button class="text-xs font-mono text-gray-400 hover:text-white flex items-center gap-2 transition-colors" onclick="showHome()">
+      <button class="text-xs font-mono text-slate-500 hover:text-black flex items-center gap-2 transition-colors" onclick="showHome()">
         <span>←</span> Exit Workspace
       </button>
       <div class="logo flex items-center gap-3 display-font font-bold text-lg">
-        <span class="logo-mark w-7 h-7 rounded bg-gradient-to-tr from-[#ff5a36] to-[#ffd166] flex items-center justify-center font-mono text-xs font-extrabold text-[#030307]">G</span> 
+        <span class="logo-mark w-7 h-7 rounded bg-gradient-to-tr from-[#ff5a36] to-[#d97706] flex items-center justify-center font-mono text-xs font-extrabold text-white">G</span> 
         Workspace Terminal
       </div>
+      <!-- Netlify Deploy Guide Button -->
+      <button class="text-xs font-mono px-3.5 py-2 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-200 hover:bg-emerald-200 transition-all font-semibold" onclick="openNetlifyWizard()">
+        🚀 Deploy to Netlify
+      </button>
     </div>
   </header>
 
   <div class="max-w-7xl mx-auto px-6 pt-28 sm:px-8">
-    <!-- App Intro block -->
     <div class="mb-10 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6">
       <div>
-        <div class="eyebrow mb-2">PRODUCTION DESK</div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 border border-black/[0.05] text-[11px] font-mono font-medium tracking-wider text-slate-600 mb-2">
+          <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span> PRODUCTION DESK
+        </div>
         <h1 class="display-font text-3xl sm:text-4xl font-semibold">Campaign Management Workspace</h1>
-        <p class="text-sm text-gray-400 mt-1">Concurrently map blogs, interactive scripts, social channels, and generative imagery.</p>
+        <p class="text-sm text-slate-600 mt-1">Concurrently map blogs, interactive scripts, social channels, and generative imagery.</p>
       </div>
       
       <!-- API live status -->
-      <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.03] border border-white/[0.05] text-xs font-mono">
-        <span class="glow-dot" id="apiKeyIndicator"></span>
-        <span class="text-gray-400 font-medium" id="apiKeyText">Sandbox Demo Engine</span>
+      <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/60 border border-black/[0.05] text-xs font-mono shadow-sm">
+        <span class="w-2 h-2 rounded-full" id="apiKeyIndicator" style="background-color: #059669;"></span>
+        <span class="text-slate-600 font-medium" id="apiKeyText">Gemini Engine Running</span>
       </div>
     </div>
 
@@ -540,19 +530,18 @@
         <!-- Local Vault Panel -->
         <div class="glass-card p-6">
           <div class="flex justify-between items-center mb-4">
-            <h4 class="text-xs font-mono uppercase text-gray-400 tracking-wider font-semibold flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#a855f7]"></span> Draft History Vault
+            <h4 class="text-xs font-mono uppercase text-slate-500 tracking-wider font-semibold flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#7c3aed]"></span> Draft History Vault
             </h4>
-            <button class="text-[10px] text-gray-500 hover:text-red-400 transition-colors font-mono" onclick="clearAllVault()">Clear Vault</button>
+            <button class="text-[10px] text-slate-400 hover:text-red-500 transition-colors font-mono" onclick="clearAllVault()">Clear Vault</button>
           </div>
           
           <div class="space-y-2 max-h-[160px] overflow-y-auto pr-1" id="vaultList">
-            <!-- Injected drafts history list items -->
-            <div class="text-xs text-gray-500 text-center py-4">No drafts saved locally.</div>
+            <div class="text-xs text-slate-400 text-center py-4">No drafts saved locally.</div>
           </div>
           
-          <div class="mt-4 pt-4 border-t border-white/[0.04]">
-            <button class="w-full py-2.5 text-xs font-mono rounded-lg bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.05] text-gray-300 transition-all text-center" id="saveSessionBtn" onclick="saveCurrentToVault()" disabled>
+          <div class="mt-4 pt-4 border-t border-black/[0.04]">
+            <button class="w-full py-2.5 text-xs font-mono rounded-lg bg-white/80 hover:bg-white border border-black/[0.05] text-slate-600 transition-all text-center" id="saveSessionBtn" onclick="saveCurrentToVault()" disabled>
               💾 Save Generation Draft
             </button>
           </div>
@@ -560,33 +549,29 @@
 
         <!-- Inputs and Configuration panel -->
         <div class="glass-card p-6 space-y-6">
-          
-          <!-- Seed inputs area -->
           <div>
-            <h3 class="text-xs font-mono uppercase text-gray-400 tracking-wider mb-3">1. Raw Content Seed</h3>
+            <h3 class="text-xs font-mono uppercase text-slate-500 tracking-wider mb-3">1. Raw Content Seed</h3>
             <div class="relative">
-              <textarea id="sourceText" oninput="updateInputCounters()" class="workspace-input min-h-[160px] placeholder-gray-600 focus:outline-none" placeholder="Paste website copy, raw specifications documentation, outline notes, or target topic definitions..."></textarea>
-              <div class="absolute bottom-3 right-3 text-[10px] font-mono text-gray-500" id="inputTextCount">0 chars</div>
+              <textarea id="sourceText" oninput="updateInputCounters()" class="workspace-input min-h-[160px] placeholder-slate-400 focus:outline-none" placeholder="Paste website copy, raw specifications documentation, outline notes, or target topic definitions..."></textarea>
+              <div class="absolute bottom-3 right-3 text-[10px] font-mono text-slate-400" id="inputTextCount">0 chars</div>
             </div>
           </div>
 
-          <!-- Output options checkboxes -->
           <div>
-            <h3 class="text-xs font-mono uppercase text-gray-400 tracking-wider mb-3">2. Target Channels</h3>
+            <h3 class="text-xs font-mono uppercase text-slate-500 tracking-wider mb-3">2. Target Channels</h3>
             <div class="grid grid-cols-2 gap-2" id="formatChips">
-              <button type="button" class="chip active bg-[#ff5a36] text-[#030307] hover:opacity-90 font-bold px-3 py-2 text-xs rounded-lg transition-all" data-format="blog">📝 Blog Post</button>
-              <button type="button" class="chip mint active bg-[#3ddc97] text-[#030307] hover:opacity-90 font-bold px-3 py-2 text-xs rounded-lg transition-all" data-format="script">🎬 YT Script</button>
-              <button type="button" class="chip purple active bg-[#a855f7] text-white hover:opacity-90 font-bold px-3 py-2 text-xs rounded-lg transition-all col-span-2" data-format="social">📱 Social Distribution</button>
+              <button type="button" class="chip active" data-format="blog">📝 Blog Post</button>
+              <button type="button" class="chip mint active" data-format="script">🎬 YT Script</button>
+              <button type="button" class="chip active col-span-2" data-format="social">📱 Social Distribution</button>
             </div>
           </div>
 
-          <!-- Configuration and brand variables -->
           <div class="space-y-4">
-            <h3 class="text-xs font-mono uppercase text-gray-400 tracking-wider">3. Pipeline Parameters</h3>
+            <h3 class="text-xs font-mono uppercase text-slate-500 tracking-wider">3. Pipeline Parameters</h3>
             
             <div>
-              <label class="block text-xs text-gray-400 mb-1.5 font-medium">Linguistic Translation</label>
-              <select id="langSelect" class="workspace-input py-2.5 text-xs text-white">
+              <label class="block text-xs text-slate-600 mb-1.5 font-medium">Linguistic Translation</label>
+              <select id="langSelect" class="workspace-input py-2.5 text-xs text-slate-800">
                 <option value="English" selected>English</option>
                 <option value="Spanish">Spanish (Español)</option>
                 <option value="French">French (Français)</option>
@@ -597,8 +582,8 @@
             </div>
 
             <div>
-              <label class="block text-xs text-gray-400 mb-1.5 font-medium">Style Archetype</label>
-              <select id="toneSelect" class="workspace-input py-2.5 text-xs text-white">
+              <label class="block text-xs text-slate-600 mb-1.5 font-medium">Style Archetype</label>
+              <select id="toneSelect" class="workspace-input py-2.5 text-xs text-slate-800">
                 <option value="conversational" selected>Conversational & clear</option>
                 <option value="professional">Professional, executive & sharp</option>
                 <option value="bold">Bold, witty & engaging</option>
@@ -607,8 +592,8 @@
             </div>
 
             <div>
-              <label class="block text-xs text-gray-400 mb-1.5 font-medium">Output Length Profile</label>
-              <select id="lengthSelect" class="workspace-input py-2.5 text-xs text-white">
+              <label class="block text-xs text-slate-600 mb-1.5 font-medium">Output Length Profile</label>
+              <select id="lengthSelect" class="workspace-input py-2.5 text-xs text-slate-800">
                 <option value="short">Short (~500 words / 2–3 min duration)</option>
                 <option value="medium" selected>Medium (~900 words / 5–7 min duration)</option>
                 <option value="long">Long (~1400 words / 10+ min duration)</option>
@@ -616,15 +601,14 @@
             </div>
 
             <div>
-              <label class="block text-xs text-gray-400 mb-1.5 font-medium">Target Keyword Map (Optional)</label>
-              <input type="text" id="keywordInput" placeholder="e.g. cold brew ratio" class="workspace-input py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none">
+              <label class="block text-xs text-slate-600 mb-1.5 font-medium">Target Keyword Map (Optional)</label>
+              <input type="text" id="keywordInput" placeholder="e.g. cold brew ratio" class="workspace-input py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none">
             </div>
           </div>
 
-          <!-- Execution parameters block -->
-          <div class="action-row">
-            <button class="premium-btn premium-btn-accent text-sm w-full py-3.5 justify-center" id="generateBtn" onclick="generateContent()">Generate Draft Suite</button>
-            <button class="settings-trigger" onclick="openSettings()" title="API Key Setup">⚙️</button>
+          <div class="action-row flex gap-3">
+            <button class="premium-btn premium-btn-accent text-sm flex-1 py-3.5 justify-center" id="generateBtn" onclick="generateContent()">Generate Draft Suite</button>
+            <button class="w-12 h-12 flex items-center justify-center rounded-xl bg-white/60 border border-black/10 text-slate-600 hover:bg-white transition-all shadow-sm" onclick="openSettings()" title="API Key Setup">⚙️</button>
           </div>
         </div>
 
@@ -636,19 +620,19 @@
         <div class="output-panel glass-card flex flex-col min-h-[620px] overflow-hidden">
           
           <!-- Channels Tabs header -->
-          <div class="output-tabs flex border-b border-white/[0.04] p-2 bg-[#07070f]/60 overflow-x-auto gap-2">
-            <button class="output-tab px-5 py-2.5 text-xs font-mono font-bold rounded-lg text-gray-500 hover:text-white transition-all" data-tab="blog" onclick="switchTab('blog')">📝 Blog Post</button>
-            <button class="output-tab px-5 py-2.5 text-xs font-mono font-bold rounded-lg text-gray-500 hover:text-white transition-all" data-tab="script" onclick="switchTab('script')">🎬 YT Script</button>
-            <button class="output-tab px-5 py-2.5 text-xs font-mono font-bold rounded-lg text-gray-500 hover:text-white transition-all" data-tab="social" onclick="switchTab('social')">📱 Social Distribution</button>
-            <button class="output-tab px-5 py-2.5 text-xs font-mono font-bold rounded-lg text-gray-500 hover:text-white transition-all" data-tab="media" onclick="switchTab('media')">🎨 Media Studio</button>
+          <div class="output-tabs flex border-b border-black/[0.04] p-2 bg-white/30 overflow-x-auto gap-2" id="outputTabs">
+            <button class="output-tab px-5 py-2.5 text-xs font-mono font-bold rounded-lg text-slate-500 hover:text-slate-900 hover:bg-white/50 transition-all" data-tab="blog" onclick="switchTab('blog')">📝 Blog Post</button>
+            <button class="output-tab px-5 py-2.5 text-xs font-mono font-bold rounded-lg text-slate-500 hover:text-slate-900 hover:bg-white/50 transition-all" data-tab="script" onclick="switchTab('script')">🎬 YT Script</button>
+            <button class="output-tab px-5 py-2.5 text-xs font-mono font-bold rounded-lg text-slate-500 hover:text-slate-900 hover:bg-white/50 transition-all" data-tab="social" onclick="switchTab('social')">📱 Social Distribution</button>
+            <button class="output-tab px-5 py-2.5 text-xs font-mono font-bold rounded-lg text-slate-500 hover:text-slate-900 hover:bg-white/50 transition-all" data-tab="media" onclick="switchTab('media')">🎨 Media Studio</button>
           </div>
 
           <!-- Channel Active Body content -->
           <div class="output-body p-8 flex-1 flex flex-col justify-between" id="outputBody">
             <div class="empty-state py-24 flex flex-col items-center justify-center text-center space-y-4">
-              <div class="glyph w-14 h-14 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-center text-2xl">✨</div>
-              <h4 class="font-bold text-white text-lg">Genify Workspace Terminal</h4>
-              <p class="text-xs text-gray-400 max-w-sm">Provide your seed details, customize campaign variables, and launch the multi-channel preview output models.</p>
+              <div class="glyph w-14 h-14 rounded-xl bg-white/60 border border-black/[0.04] flex items-center justify-center text-2xl shadow-sm">✨</div>
+              <h4 class="font-bold text-slate-800 text-lg display-font">Genify Workspace Terminal</h4>
+              <p class="text-xs text-slate-500 max-w-sm">Provide your seed details, customize campaign variables, and launch the multi-channel preview output models.</p>
             </div>
           </div>
 
@@ -661,38 +645,85 @@
 </div>
 
 <!-- ============ SETTINGS MODAL ============ -->
-<div class="modal-overlay" id="settingsModal">
-  <div class="modal-card glass-card p-8 space-y-6">
+<div class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm" id="settingsModal" style="display:none;">
+  <div class="modal-card glass-card p-8 space-y-6 w-full max-w-md mx-4 bg-white">
     <div>
-      <h2 class="display-font text-2xl font-semibold">Genify AI Setup</h2>
-      <p class="text-sm text-gray-400 mt-1">Configure your Workspace visual workspace palette and securely input your Google Gemini API parameters.</p>
+      <h2 class="display-font text-2xl font-semibold text-slate-800">Genify AI Setup</h2>
+      <p class="text-sm text-slate-500 mt-1">Configure your Workspace visual workspace palette and securely input your Google Gemini API parameters.</p>
     </div>
     
     <!-- Theme Palette Selector -->
     <div class="space-y-2">
-      <label class="block text-xs text-gray-400 font-mono uppercase tracking-wider">Workspace Color Theme</label>
+      <label class="block text-xs text-slate-500 font-mono uppercase tracking-wider">Workspace Color Theme</label>
       <div class="flex gap-4 pt-1">
         <button class="w-8 h-8 rounded-full bg-[#ff5a36] border-2 border-white shadow-lg shadow-orange-500/20" onclick="setTheme('default')" id="theme-default"></button>
-        <button class="w-8 h-8 rounded-full bg-[#a855f7] border-2 border-transparent shadow-lg shadow-purple-500/20" onclick="setTheme('purple')" id="theme-purple"></button>
-        <button class="w-8 h-8 rounded-full bg-[#3ddc97] border-2 border-transparent shadow-lg shadow-emerald-500/20" onclick="setTheme('mint')" id="theme-mint"></button>
+        <button class="w-8 h-8 rounded-full bg-[#7c3aed] border-2 border-transparent shadow-lg shadow-purple-500/20" onclick="setTheme('purple')" id="theme-purple"></button>
+        <button class="w-8 h-8 rounded-full bg-[#059669] border-2 border-transparent shadow-lg shadow-emerald-500/20" onclick="setTheme('mint')" id="theme-mint"></button>
       </div>
     </div>
 
     <!-- API Key settings field -->
     <div class="space-y-2">
-      <label for="apiKeyInput" class="block text-xs text-gray-400 font-mono uppercase tracking-wider">Google Gemini API Key</label>
+      <label for="apiKeyInput" class="block text-xs text-slate-500 font-mono uppercase tracking-wider">Google Gemini API Key</label>
       <input type="password" id="apiKeyInput" placeholder="AIzaSy..." class="workspace-input focus:outline-none">
-      <div class="text-[10px] text-gray-500 font-mono">Kept entirely local. Never sent or cached outside client-side browser space.</div>
+      <div class="text-[10px] text-slate-400 font-mono">Kept entirely local. Never sent or cached outside client-side browser space. Get a free key at <a href="https://aistudio.google.com/" target="_blank" class="text-blue-500 hover:underline">Google AI Studio</a>.</div>
     </div>
     
-    <div class="modal-actions border-t border-white/[0.04] pt-4">
+    <div class="modal-actions border-t border-black/[0.04] pt-4 flex justify-end gap-3">
       <button class="premium-btn premium-btn-ghost text-xs" onclick="closeSettings()">Cancel</button>
       <button class="premium-btn premium-btn-accent text-xs" onclick="saveSettings()">Apply Parameters</button>
     </div>
   </div>
 </div>
 
+<!-- ============ NETLIFY WIZARD MODAL ============ -->
+<div class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm" id="netlifyWizardModal" style="display:none;">
+  <div class="modal-card glass-card p-8 space-y-6 w-full max-w-lg mx-4 bg-white">
+    <div>
+      <h2 class="display-font text-2xl font-semibold text-slate-800">🚀 Deploy This Site To Netlify</h2>
+      <p class="text-sm text-slate-500 mt-1">Host your own live, public content generation workspace in less than 2 minutes for free.</p>
+    </div>
+    
+    <div class="space-y-4 text-xs text-slate-600 leading-relaxed">
+      <div class="flex items-start gap-3">
+        <span class="w-5 h-5 rounded-full bg-[#ff5a36] text-white flex items-center justify-center font-bold flex-shrink-0">1</span>
+        <div>
+          <strong class="text-slate-800">Save This Code:</strong> Save the current code to a file named <code class="bg-slate-100 px-1 py-0.5 rounded text-[#ff5a36] font-mono">index.html</code>.
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <span class="w-5 h-5 rounded-full bg-[#ff5a36] text-white flex items-center justify-center font-bold flex-shrink-0">2</span>
+        <div>
+          <strong class="text-slate-800">Paste Your Key (Optional):</strong> To share the live generation with everyone who visits, open your <code class="bg-slate-100 px-1 py-0.5 rounded font-mono">index.html</code> file in any text editor and paste your Google AI Studio API Key in the <code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600 font-mono">GLOBAL_API_KEY</code> field at the very beginning of the script tag.
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <span class="w-5 h-5 rounded-full bg-[#ff5a36] text-white flex items-center justify-center font-bold flex-shrink-0">3</span>
+        <div>
+          <strong class="text-slate-800">Zip & Drag:</strong> Put the <code class="bg-slate-100 px-1 py-0.5 rounded font-mono">index.html</code> file inside an empty folder, zip it, and drag it into Netlify's manual deploy box at <a href="https://app.netlify.com" target="_blank" class="text-blue-500 hover:underline font-bold">app.netlify.com</a>.
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-xs text-amber-800 leading-relaxed">
+      ⚠️ <strong>CORS Note:</strong> Unlike OpenAI or Claude APIs, Google's Gemini API permits direct browser calls out-of-the-box. This ensures your Netlify hosted site can execute content generations with zero CORS blockages!
+    </div>
+    
+    <div class="modal-actions border-t border-black/[0.04] pt-4 flex justify-end">
+      <button class="premium-btn premium-btn-accent text-xs" onclick="closeNetlifyWizard()">Got It, Let's Deploy!</button>
+    </div>
+  </div>
+</div>
+
 <script>
+  // ==========================================
+  // CONFIGURATION: SET YOUR API KEY HERE
+  // If you want your website to work for everyone on Netlify without asking them for a key,
+  // paste your Google Gemini API key between the quotes below:
+  const GLOBAL_API_KEY = ""; 
+  // ==========================================
+
+  /* ---------------- VIEW SWITCHING ---------------- */
   function showApp(){
     document.getElementById('viewHome').style.display = 'none';
     document.getElementById('viewApp').style.display = 'block';
@@ -717,33 +748,36 @@
     document.getElementById('inputTextCount').textContent = `${val.length} chars`;
   }
 
-  let API_KEY = localStorage.getItem('genify_gemini_key') || '';
+  /* ---------------- THEME CONFIGURATION ---------------- */
+  let API_KEY = GLOBAL_API_KEY || localStorage.getItem('genify_gemini_key') || '';
+  
   function updateApiKeyStatus() {
     const ind = document.getElementById('apiKeyIndicator');
     const txt = document.getElementById('apiKeyText');
-    if(API_KEY) {
-      ind.classList.remove('bg-orange-500');
-      ind.style.backgroundColor = '#3ddc97';
-      txt.textContent = 'Gemini Production Activated';
+    if (GLOBAL_API_KEY) {
+      ind.style.backgroundColor = '#059669';
+      txt.textContent = 'Global Key Loaded';
+    } else if(API_KEY) {
+      ind.style.backgroundColor = '#059669';
+      txt.textContent = 'Local Key Activated';
     } else {
-      ind.style.backgroundColor = '#ff5a36';
-      txt.textContent = 'Sandbox Demo Engine';
+      ind.style.backgroundColor = '#d97706';
+      txt.textContent = 'Demo Sandbox Active';
     }
   }
 
   function setTheme(t) {
-    document.querySelectorAll('.modal-card button[id^="theme-"]').forEach(s => s.classList.remove('border-white'));
+    document.querySelectorAll('.modal-card button[id^="theme-"]').forEach(s => s.classList.remove('border-slate-800', 'border-2'));
     document.querySelectorAll('.modal-card button[id^="theme-"]').forEach(s => s.classList.add('border-transparent'));
     if(t === 'default') {
       document.body.removeAttribute('data-theme');
-      document.getElementById('theme-default').classList.add('border-white');
+      document.getElementById('theme-default').classList.add('border-slate-800', 'border-2');
     } else {
       document.body.setAttribute('data-theme', t);
-      document.getElementById(`theme-${t}`).classList.add('border-white');
+      document.getElementById(`theme-${t}`).classList.add('border-slate-800', 'border-2');
     }
     localStorage.setItem('genify_theme', t);
   }
-  // Load local theme preset on load
   setTheme(localStorage.getItem('genify_theme') || 'default');
 
   function openSettings() {
@@ -760,13 +794,21 @@
       API_KEY = val;
     } else {
       localStorage.removeItem('genify_gemini_key');
-      API_KEY = '';
+      API_KEY = GLOBAL_API_KEY || '';
     }
     updateApiKeyStatus();
     closeSettings();
   }
   updateApiKeyStatus();
 
+  function openNetlifyWizard() {
+    document.getElementById('netlifyWizardModal').style.display = 'flex';
+  }
+  function closeNetlifyWizard() {
+    document.getElementById('netlifyWizardModal').style.display = 'none';
+  }
+
+  /* ---------------- CHIP MANAGEMENTS ---------------- */
   const formatState = { blog: true, script: true, social: true };
   document.querySelectorAll('#formatChips .chip').forEach(chip => {
     chip.addEventListener('click', () => {
@@ -778,11 +820,12 @@
       if (formatState[fmt]) {
         chip.style.opacity = '1';
       } else {
-        chip.style.opacity = '0.35';
+        chip.style.opacity = '0.45';
       }
     });
   });
 
+  /* ---------------- FORMATTING MD TO HTML ---------------- */
   function mdToHtml(md){
     if(!md) return '';
     const lines = md.split('\n');
@@ -790,17 +833,17 @@
     for(let raw of lines){
       let line = raw.trim();
       if(line === ''){ if(inList){ html += '</ul>'; inList=false; } continue; }
-      if(/^###\s+/.test(line)){ if(inList){html+='</ul>';inList=false;} html += `<h3 class="display-font text-lg font-bold text-white mt-5 mb-2">${inlineMd(line.replace(/^###\s+/,''))}</h3>`; continue; }
-      if(/^##\s+/.test(line)){ if(inList){html+='</ul>';inList=false;} html += `<h2 class="display-font text-xl font-bold text-white mt-6 mb-3">${inlineMd(line.replace(/^##\s+/,''))}</h2>`; continue; }
-      if(/^[-*]\s+/.test(line)){ if(!inList){ html += '<ul class="list-disc pl-5 mb-4 text-gray-300 space-y-1.5 text-sm">'; inList=true; } html += `<li>${inlineMd(line.replace(/^[-*]\s+/,''))}</li>`; continue; }
+      if(/^###\s+/.test(line)){ if(inList){html+='</ul>';inList=false;} html += `<h3 class="display-font text-lg font-bold text-slate-800 mt-5 mb-2">${inlineMd(line.replace(/^###\s+/,''))}</h3>`; continue; }
+      if(/^##\s+/.test(line)){ if(inList){html+='</ul>';inList=false;} html += `<h2 class="display-font text-xl font-bold text-slate-800 mt-6 mb-3">${inlineMd(line.replace(/^##\s+/,''))}</h2>`; continue; }
+      if(/^[-*]\s+/.test(line)){ if(!inList){ html += '<ul class="list-disc pl-5 mb-4 text-slate-700 space-y-1.5 text-sm">'; inList=true; } html += `<li>${inlineMd(line.replace(/^[-*]\s+/,''))}</li>`; continue; }
       if(inList){ html += '</ul>'; inList=false; }
-      html += `<p class="mb-4 text-gray-300 leading-relaxed text-sm">${inlineMd(line)}</p>`;
+      html += `<p class="mb-4 text-slate-700 leading-relaxed text-sm">${inlineMd(line)}</p>`;
     }
     if(inList) html += '</ul>';
     return html;
   }
   function inlineMd(t){
-    return t.replace(/\*\*(.+?)\*\*/g,'<strong class="text-white font-bold">$1</strong>').replace(/\*(.+?)\*/g,'<em class="text-gray-200">$1</em>');
+    return t.replace(/\*\*(.+?)\*\*/g,'<strong class="text-slate-900 font-bold">$1</strong>').replace(/\*(.+?)\*/g,'<em class="text-slate-600">$1</em>');
   }
   function escapeHtml(s){
     return (s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -809,7 +852,7 @@
   let lastResult = { blog: null, script: null, social: null, media: null };
   let activeTab = 'blog';
 
-  // Speech parameters trackers
+  /* ---------------- TTS SPEECH CONTROLLERS ---------------- */
   let currentUtterance = null;
   let isPlayingAudio = false;
 
@@ -818,8 +861,8 @@
     let i = 0;
     body.innerHTML = `
       <div class="loading-state py-24 flex flex-col items-center justify-center space-y-4">
-        <div class="spinner w-10 h-10 rounded-full border-2 border-white/10 border-t-[#ff5a36] animate-spin"></div>
-        <div class="loading-msg text-xs font-mono text-gray-400" id="loadingMsg">${msgs[0]}</div>
+        <div class="spinner w-10 h-10 rounded-full border-2 border-slate-200 border-t-orange-500 animate-spin"></div>
+        <div class="loading-msg text-xs font-mono text-slate-500" id="loadingMsg">${msgs[0]}</div>
       </div>
     `;
     if(msgs.length > 1){
@@ -834,25 +877,27 @@
 
   function updateTabs(){
     const tabs = document.getElementById('outputTabs');
+    if(!tabs) return;
+    
     const blogTab = tabs.querySelector('[data-tab="blog"]');
     const scriptTab = tabs.querySelector('[data-tab="script"]');
     const socialTab = tabs.querySelector('[data-tab="social"]');
     const mediaTab = tabs.querySelector('[data-tab="media"]');
 
-    blogTab.style.display = lastResult.blog ? 'block' : 'none';
-    scriptTab.style.display = lastResult.script ? 'block' : 'none';
-    socialTab.style.display = lastResult.social ? 'block' : 'none';
-    mediaTab.style.display = lastResult.media ? 'block' : 'none';
+    if (blogTab) blogTab.style.display = lastResult.blog ? 'block' : 'none';
+    if (scriptTab) scriptTab.style.display = lastResult.script ? 'block' : 'none';
+    if (socialTab) socialTab.style.display = lastResult.social ? 'block' : 'none';
+    if (mediaTab) mediaTab.style.display = lastResult.media ? 'block' : 'none';
 
     tabs.querySelectorAll('.output-tab').forEach(btn => {
-      btn.classList.remove('text-white', 'border-b-2', 'border-[#ff5a36]');
-      btn.classList.add('text-gray-500');
+      btn.classList.remove('text-slate-900', 'border-b-2', 'border-orange-500', 'bg-white/60');
+      btn.classList.add('text-slate-500');
     });
 
     const activeBtn = tabs.querySelector(`[data-tab="${activeTab}"]`);
     if(activeBtn) {
-      activeBtn.classList.add('text-white', 'border-b-2', 'border-[#ff5a36]');
-      activeBtn.classList.remove('text-gray-500');
+      activeBtn.classList.add('text-slate-900', 'border-b-2', 'border-orange-500', 'bg-white/60');
+      activeBtn.classList.remove('text-slate-500');
     }
   }
 
@@ -868,10 +913,7 @@
   }
 
   function playTextToSpeech(text) {
-    if (!('speechSynthesis' in window)) {
-      return;
-    }
-    
+    if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
 
     const rate = parseFloat(document.getElementById('ttsRateSelect')?.value || '1.0');
@@ -881,12 +923,8 @@
     currentUtterance.rate = rate;
     currentUtterance.pitch = pitch;
 
-    currentUtterance.onend = () => {
-      togglePlayButtonState(false);
-    };
-    currentUtterance.onerror = () => {
-      togglePlayButtonState(false);
-    };
+    currentUtterance.onend = () => togglePlayButtonState(false);
+    currentUtterance.onerror = () => togglePlayButtonState(false);
 
     window.speechSynthesis.speak(currentUtterance);
     togglePlayButtonState(true);
@@ -929,6 +967,7 @@
     }
   }
 
+  /* ---------------- INTERACTIVE SEO METRICS ---------------- */
   function performSEOAudit(tab) {
     const keyword = document.getElementById('keywordInput').value.trim().toLowerCase();
     let textToAnalyze = "";
@@ -962,32 +1001,33 @@
     if (score > 100) score = 100;
 
     return `
-      <div class="mt-10 pt-8 border-t border-white/[0.04]">
-        <h4 class="text-xs font-mono uppercase text-gray-400 mb-4 flex items-center gap-2">
-          <span class="w-2 h-2 rounded bg-[#3ddc97]"></span> SEO & Platform Scorecard
+      <div class="mt-10 pt-8 border-t border-black/[0.04]">
+        <h4 class="text-xs font-mono uppercase text-slate-500 mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 rounded bg-[#059669]"></span> SEO & Platform Scorecard
         </h4>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="p-4 bg-black/40 rounded-xl border border-white/[0.04]">
-            <span class="block text-[10px] text-gray-500 font-mono">OPT SCORE</span>
-            <span class="text-lg font-bold text-[#3ddc97]">${score}/100</span>
+          <div class="p-4 bg-white/60 rounded-xl border border-black/[0.04] shadow-sm">
+            <span class="block text-[10px] text-slate-400 font-mono">OPT SCORE</span>
+            <span class="text-lg font-bold text-[#059669]">${score}/100</span>
           </div>
-          <div class="p-4 bg-black/40 rounded-xl border border-white/[0.04]">
-            <span class="block text-[10px] text-gray-500 font-mono">KEY DENSITY</span>
-            <span class="text-lg font-bold text-white">${keyword ? `${density}%` : 'N/A'}</span>
+          <div class="p-4 bg-white/60 rounded-xl border border-black/[0.04] shadow-sm">
+            <span class="block text-[10px] text-slate-400 font-mono">KEY DENSITY</span>
+            <span class="text-lg font-bold text-slate-800">${keyword ? `${density}%` : 'N/A'}</span>
           </div>
-          <div class="p-4 bg-black/40 rounded-xl border border-white/[0.04]">
-            <span class="block text-[10px] text-gray-500 font-mono">WORDS COUNT</span>
-            <span class="text-lg font-bold text-[#ffd166]">${wordCount}</span>
+          <div class="p-4 bg-white/60 rounded-xl border border-black/[0.04] shadow-sm">
+            <span class="block text-[10px] text-slate-400 font-mono">WORDS COUNT</span>
+            <span class="text-lg font-bold text-[#d97706]">${wordCount}</span>
           </div>
-          <div class="p-4 bg-black/40 rounded-xl border border-white/[0.04]">
-            <span class="block text-[10px] text-gray-500 font-mono">READABILITY</span>
-            <span class="text-lg font-bold text-[#a855f7]">${avgWordLen < 5.2 ? 'Optimized' : 'Technical'}</span>
+          <div class="p-4 bg-white/60 rounded-xl border border-black/[0.04] shadow-sm">
+            <span class="block text-[10px] text-slate-400 font-mono">READABILITY</span>
+            <span class="text-lg font-bold text-[#7c3aed]">${avgWordLen < 5.2 ? 'Optimized' : 'Technical'}</span>
           </div>
         </div>
       </div>
     `;
   }
 
+  /* ---------------- PROCEDURAL VECTOR IMAGES ---------------- */
   function renderProceduralArt(keyword, textSeed) {
     const container = document.getElementById('generativeArtCanvasWrapper');
     if (!container) return;
@@ -995,19 +1035,19 @@
     const canvas = document.createElement('canvas');
     canvas.width = 600;
     canvas.height = 340;
-    canvas.className = "w-full rounded-xl border border-white/[0.08] shadow-2xl";
+    canvas.className = "w-full rounded-xl border border-black/[0.06] shadow-lg";
     const ctx = canvas.getContext('2d');
 
     const seed = (keyword || textSeed || "art").length;
     const g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    g.addColorStop(0, '#0a0a14');
-    g.addColorStop(0.5, '#130f24');
-    g.addColorStop(1, '#ff5a36');
+    g.addColorStop(0, '#e0f2fe'); 
+    g.addColorStop(0.5, '#fef08a'); 
+    g.addColorStop(1, '#ffedd5'); 
 
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+    ctx.strokeStyle = 'rgba(15, 23, 42, 0.03)';
     ctx.lineWidth = 1;
     for(let i = 0; i < canvas.width; i += 30) {
       ctx.beginPath();
@@ -1022,12 +1062,12 @@
       ctx.stroke();
     }
 
-    ctx.fillStyle = 'rgba(61, 220, 151, 0.08)';
+    ctx.fillStyle = 'rgba(5, 150, 105, 0.08)';
     ctx.beginPath();
     ctx.arc(canvas.width / 2, canvas.height / 2, 70 + (seed * 2.5), 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = 'rgba(168, 85, 247, 0.12)';
+    ctx.fillStyle = 'rgba(124, 58, 237, 0.08)';
     ctx.beginPath();
     ctx.moveTo(canvas.width/4, canvas.height/3);
     ctx.lineTo(canvas.width*0.75, canvas.height/4);
@@ -1035,13 +1075,13 @@
     ctx.closePath();
     ctx.fill();
 
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#0f172a';
     ctx.font = 'bold 20px "Fraunces", serif';
     ctx.fillText((keyword || "AI Spatial Canvas Blueprint").toUpperCase(), 40, canvas.height - 80);
 
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.5)';
     ctx.font = '10px "JetBrains Mono", monospace';
-    ctx.fillText("GENIFY DESIGN SYSTEM // CANVAS PREVIEW v2.0", 40, canvas.height - 55);
+    ctx.fillText("GENIFY DESIGN SYSTEM // LIGHT CANVAS PREVIEW v2.5", 40, canvas.height - 55);
 
     container.innerHTML = "";
     container.appendChild(canvas);
@@ -1053,25 +1093,28 @@
 
     const wrapper = document.getElementById('generativeArtCanvasWrapper');
     wrapper.innerHTML = `
-      <div class="h-[340px] flex flex-col items-center justify-center bg-[#07070f] rounded-xl border border-white/[0.04] space-y-4">
-        <div class="spinner w-8 h-8 rounded-full border-2 border-white/10 border-t-[#a855f7] animate-spin"></div>
-        <span class="text-xs font-mono text-gray-500">Routing generation requests to Google Imagen Services...</span>
+      <div class="h-[340px] flex flex-col items-center justify-center bg-white/60 rounded-xl border border-black/[0.04] space-y-4">
+        <div class="spinner w-8 h-8 rounded-full border-2 border-slate-200 border-t-[#7c3aed] animate-spin"></div>
+        <span class="text-xs font-mono text-slate-500">Routing generation requests to Google Imagen Services...</span>
       </div>
     `;
 
-    if (!API_KEY) {
+    // Try Gemini API keys
+    const activeKey = GLOBAL_API_KEY || localStorage.getItem('genify_gemini_key') || '';
+
+    if (!activeKey) {
       setTimeout(() => {
         renderProceduralArt(promptText, "Generated Abstract");
         const alertBox = document.createElement('div');
-        alertBox.className = "p-4 bg-[#a855f7]/5 border border-[#a855f7]/20 rounded-xl text-xs text-[#a855f7] mt-4 font-mono";
-        alertBox.innerHTML = "✨ <strong>Procedural Canvas Fallback.</strong> Connect your Gemini API Key under settings to unlock real high-definition Imagen 4 generation models.";
+        alertBox.className = "p-4 bg-[#7c3aed]/5 border border-[#7c3aed]/20 rounded-xl text-xs text-[#7c3aed] mt-4 font-mono";
+        alertBox.innerHTML = "✨ <strong>Procedural Canvas Fallback.</strong> Connect your Gemini API Key under settings to unlock real high-definition Imagen generation models.";
         wrapper.appendChild(alertBox);
       }, 1500);
       return;
     }
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${API_KEY}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${activeKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1084,31 +1127,31 @@
       const result = await response.json();
       if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
         const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-        wrapper.innerHTML = `<img src="${imageUrl}" class="w-full rounded-xl border border-white/[0.08] shadow-2xl" alt="Generated visual asset"/>`;
+        wrapper.innerHTML = `<img src="${imageUrl}" class="w-full rounded-xl border border-black/[0.08] shadow-lg" alt="Generated visual asset"/>`;
       } else {
         throw new Error('Image decoding payload missing.');
       }
     } catch(err) {
-      wrapper.innerHTML = `<div class="p-4 bg-red-950/20 text-red-400 border border-red-900/30 text-xs rounded-xl">API Endpoint Error: ${err.message}. Displaying procedural fallback visual.</div>`;
+      wrapper.innerHTML = `<div class="p-4 bg-red-50 text-red-600 border border-red-200 text-xs rounded-xl">API Endpoint Error: ${err.message}. Displaying procedural fallback visual.</div>`;
       setTimeout(() => {
         renderProceduralArt(promptText, "Fallback Vector");
       }, 1500);
     }
   }
 
+  /* ---------------- RENDERING SUITE PREVIEWS ---------------- */
   function renderActive(){
     const body = document.getElementById('outputBody');
     if (!body) return;
 
-    // Build speech controls structure
     const ttsControlTemplate = `
-      <div class="flex items-center gap-4 p-4 bg-black/40 rounded-xl border border-white/[0.04] mb-8 flex-wrap">
+      <div class="flex items-center gap-4 p-4 bg-white/60 rounded-xl border border-black/[0.04] mb-8 flex-wrap shadow-sm">
         <button id="ttsPlayBtn" onclick="handleTtsToggle('${activeTab}')" class="px-4 py-2 rounded-lg bg-[#ff5a36]/10 text-[#ff5a36] hover:bg-[#ff5a36]/20 text-xs font-mono font-semibold transition-all">
           🎧 Listen Playback
         </button>
         <div class="flex items-center gap-2">
-          <span class="text-[10px] text-gray-500 font-mono">SPEED:</span>
-          <select id="ttsRateSelect" class="bg-black border border-white/10 rounded-md text-[10px] p-1 text-white">
+          <span class="text-[10px] text-slate-500 font-mono">SPEED:</span>
+          <select id="ttsRateSelect" class="bg-white border border-black/10 rounded-md text-[10px] p-1 text-slate-800 focus:outline-none">
             <option value="0.8">0.8x</option>
             <option value="1.0" selected>1.0x</option>
             <option value="1.2">1.2x</option>
@@ -1116,8 +1159,8 @@
           </select>
         </div>
         <div class="flex items-center gap-2">
-          <span class="text-[10px] text-gray-500 font-mono">PITCH:</span>
-          <select id="ttsPitchSelect" class="bg-black border border-white/10 rounded-md text-[10px] p-1 text-white">
+          <span class="text-[10px] text-slate-500 font-mono">PITCH:</span>
+          <select id="ttsPitchSelect" class="bg-white border border-black/10 rounded-md text-[10px] p-1 text-slate-800 focus:outline-none">
             <option value="0.8">Deep Baritone</option>
             <option value="1.0" selected>Balanced Voice</option>
             <option value="1.2">High Soprano</option>
@@ -1130,69 +1173,68 @@
       const b = lastResult.blog;
       body.innerHTML = `
         <div class="space-y-6">
-          <div class="result-head flex justify-between items-start gap-4 pb-6 border-b border-white/[0.04]">
+          <div class="result-head flex justify-between items-start gap-4 pb-6 border-b border-black/[0.04]">
             <div>
-              <div class="result-title text-2xl font-bold text-white mb-2 display-font">${escapeHtml(b.title)}</div>
-              <div class="result-meta text-xs text-gray-400">⏱️ ${escapeHtml(b.readTime||'')} read path time</div>
-              <div class="result-tags flex gap-2 mt-4">${(b.tags||[]).map(t=>`<span class="tag px-2.5 py-1 rounded-md text-[10px] font-mono bg-white/[0.02] border border-white/[0.04] text-gray-400">#${escapeHtml(t)}</span>`).join('')}</div>
+              <div class="result-title text-2xl font-bold text-slate-800 mb-2 display-font">${escapeHtml(b.title)}</div>
+              <div class="result-meta text-xs text-slate-500">⏱️ ${escapeHtml(b.readTime||'')} read path time</div>
+              <div class="result-tags flex gap-2 mt-4">${(b.tags||[]).map(t=>`<span class="tag px-2.5 py-1 rounded-md text-[10px] font-mono bg-white/60 border border-black/[0.04] text-slate-500">#${escapeHtml(t)}</span>`).join('')}</div>
             </div>
             <div class="result-actions flex gap-2">
-              <button class="icon-btn w-9 h-9 rounded-lg border border-white/10 hover:border-white/30 flex items-center justify-center text-xs text-gray-400 hover:text-white transition-all" title="Copy Raw Text" onclick="copyText('blog')">⧉</button>
-              <button class="icon-btn w-9 h-9 rounded-lg border border-white/10 hover:border-white/30 flex items-center justify-center text-xs text-gray-400 hover:text-white transition-all" title="Download Plaintext" onclick="downloadText('blog')">⬇</button>
+              <button class="icon-btn w-9 h-9 rounded-lg border border-black/10 hover:border-black/30 flex items-center justify-center text-xs text-slate-500 hover:text-black transition-all" title="Copy Raw Text" onclick="copyText('blog')">⧉</button>
+              <button class="icon-btn w-9 h-9 rounded-lg border border-black/10 hover:border-black/30 flex items-center justify-center text-xs text-slate-500 hover:text-black transition-all" title="Download Plaintext" onclick="downloadText('blog')">⬇</button>
             </div>
           </div>
           ${ttsControlTemplate}
-          <div class="article max-w-none text-gray-300">${mdToHtml(b.content)}</div>
+          <div class="article max-w-none text-slate-700">${mdToHtml(b.content)}</div>
           ${performSEOAudit('blog')}
         </div>
       `;
     } else if(activeTab === 'script' && lastResult.script){
       const s = lastResult.script;
       const sections = (s.sections||[]).map(sec => `
-        <div class="script-section border-l-2 border-white/10 pl-6 py-2 mb-4">
-          <div class="script-timestamp text-[11px] font-mono text-[#3ddc97] font-semibold mb-1">${escapeHtml(sec.timestamp||'')}</div>
-          <div class="script-narration text-sm text-gray-300 leading-relaxed mb-1.5">${escapeHtml(sec.narration||'')}</div>
-          <div class="script-visual text-[11.5px] text-gray-500 italic">📽️ Framing Prompt: ${escapeHtml(sec.visual||'')}</div>
+        <div class="script-section border-l-2 border-black/10 pl-6 py-2 mb-4">
+          <div class="script-timestamp text-[11px] font-mono text-[#059669] font-semibold mb-1">${escapeHtml(sec.timestamp||'')}</div>
+          <div class="script-narration text-sm text-slate-700 leading-relaxed mb-1.5">${escapeHtml(sec.narration||'')}</div>
+          <div class="script-visual text-[11.5px] text-slate-400 italic">📽️ Framing Prompt: ${escapeHtml(sec.visual||'')}</div>
         </div>
       `).join('');
 
       body.innerHTML = `
         <div class="space-y-6">
-          <div class="result-head flex justify-between items-start gap-4 pb-6 border-b border-white/[0.04]">
+          <div class="result-head flex justify-between items-start gap-4 pb-6 border-b border-black/[0.04]">
             <div>
-              <div class="result-title text-2xl font-bold text-white mb-2 display-font">${escapeHtml(s.title)}</div>
-              <div class="result-meta text-xs text-gray-400">🎬 Estimated Video Duration: ${escapeHtml(s.duration||'')}</div>
-              <div class="result-tags flex gap-2 mt-4">${(s.tags||[]).map(t=>`<span class="tag px-2.5 py-1 rounded-md text-[10px] font-mono bg-white/[0.02] border border-white/[0.04] text-gray-400">#${escapeHtml(t)}</span>`).join('')}</div>
+              <div class="result-title text-2xl font-bold text-slate-800 mb-2 display-font">${escapeHtml(s.title)}</div>
+              <div class="result-meta text-xs text-slate-500">🎬 Estimated Video Duration: ${escapeHtml(s.duration||'')}</div>
+              <div class="result-tags flex gap-2 mt-4">${(s.tags||[]).map(t=>`<span class="tag px-2.5 py-1 rounded-md text-[10px] font-mono bg-white/60 border border-black/[0.04] text-slate-500">#${escapeHtml(t)}</span>`).join('')}</div>
             </div>
             <div class="result-actions flex gap-2">
-              <button class="icon-btn w-9 h-9 rounded-lg border border-white/10 hover:border-white/30 flex items-center justify-center text-xs text-gray-400 hover:text-white transition-all" title="Copy Raw Text" onclick="copyText('script')">⧉</button>
-              <button class="icon-btn w-9 h-9 rounded-lg border border-white/10 hover:border-white/30 flex items-center justify-center text-xs text-gray-400 hover:text-white transition-all" title="Download Plaintext" onclick="downloadText('script')">⬇</button>
+              <button class="icon-btn w-9 h-9 rounded-lg border border-black/10 hover:border-black/30 flex items-center justify-center text-xs text-slate-500 hover:text-black transition-all" title="Copy Raw Text" onclick="copyText('script')">⧉</button>
+              <button class="icon-btn w-9 h-9 rounded-lg border border-black/10 hover:border-black/30 flex items-center justify-center text-xs text-slate-500 hover:text-black transition-all" title="Download Plaintext" onclick="downloadText('script')">⬇</button>
             </div>
           </div>
           ${ttsControlTemplate}
-          <div class="hook-box p-5 bg-[#3ddc97]/5 border border-[#3ddc97]/20 rounded-xl mb-6 text-sm">
-            <span class="block text-[10px] font-mono font-bold text-[#3ddc97] mb-1.5 uppercase tracking-wider">Hook Strategy (Initial 8 Seconds Retention Check)</span>
+          <div class="hook-box p-5 bg-[#059669]/5 border border-[#059669]/20 rounded-xl mb-6 text-sm">
+            <span class="block text-[10px] font-mono font-bold text-[#ff5a36] mb-1.5 uppercase tracking-wider">Hook Strategy (Initial 8 Seconds Retention Check)</span>
             ${escapeHtml(s.hook||'')}
           </div>
 
-          <!-- Retention curve chart simulation -->
-          <div class="mb-6 p-5 bg-black/40 border border-white/[0.04] rounded-xl">
-            <span class="block text-[10px] font-mono text-gray-500 mb-3 uppercase tracking-wider">Estimated Audience Retention Forecast</span>
-            <div class="h-12 w-full bg-black/40 rounded-lg flex items-end px-3 pb-1 gap-1.5">
-              <div class="w-1/12 bg-[#3ddc97] h-[95%] rounded-t-md" title="Hook Start"></div>
-              <div class="w-1/12 bg-[#3ddc97] h-[92%] rounded-t-md"></div>
-              <div class="w-1/12 bg-[#3ddc97] h-[89%] rounded-t-md"></div>
-              <div class="w-1/12 bg-[#3ddc97] h-[86%] rounded-t-md"></div>
-              <div class="w-1/12 bg-[#ffd166] h-[78%] rounded-t-md" title="Mid Dip"></div>
-              <div class="w-1/12 bg-[#ffd166] h-[75%] rounded-t-md"></div>
-              <div class="w-1/12 bg-[#3ddc97] h-[82%] rounded-t-md" title="Pacing Recovery"></div>
-              <div class="w-1/12 bg-[#3ddc97] h-[84%] rounded-t-md"></div>
-              <div class="w-1/12 bg-[#3ddc97] h-[86%] rounded-t-md"></div>
-              <div class="w-1/12 bg-[#3ddc97] h-[82%] rounded-t-md"></div>
-              <div class="w-1/12 bg-[#3ddc97] h-[80%] rounded-t-md"></div>
-              <div class="w-1/12 bg-[#3ddc97] h-[78%] rounded-t-md" title="CTA Recovery"></div>
+          <div class="mb-6 p-5 bg-white/60 border border-black/[0.04] rounded-xl shadow-sm">
+            <span class="block text-[10px] font-mono text-slate-400 mb-3 uppercase tracking-wider">Estimated Audience Retention Forecast</span>
+            <div class="h-12 w-full bg-slate-100/80 rounded-lg flex items-end px-3 pb-1 gap-1.5">
+              <div class="w-1/12 bg-[#059669] h-[95%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#059669] h-[92%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#059669] h-[89%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#059669] h-[86%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#d97706] h-[78%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#d97706] h-[75%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#059669] h-[82%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#059669] h-[84%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#059669] h-[86%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#059669] h-[82%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#059669] h-[80%] rounded-t-md"></div>
+              <div class="w-1/12 bg-[#059669] h-[78%] rounded-t-md"></div>
             </div>
-            <div class="flex justify-between text-[9px] font-mono text-gray-600 mt-2">
+            <div class="flex justify-between text-[9px] font-mono text-slate-500 mt-2">
               <span>0:00 (START)</span>
               <span>8s THRESHOLD</span>
               <span>1:00 (MIDWAY PROCESS)</span>
@@ -1203,13 +1245,13 @@
             ${sections}
           </div>
           
-          <div class="p-4 bg-black/40 border border-white/[0.04] rounded-xl mt-6 text-sm">
-            <span class="block text-[10px] font-mono text-gray-500 mb-1">OUTRO CALL TO ACTION</span>
+          <div class="p-4 bg-white/60 border border-black/[0.04] rounded-xl mt-6 text-sm shadow-sm">
+            <span class="block text-[10px] font-mono text-slate-400 mb-1">OUTRO CALL TO ACTION</span>
             ${escapeHtml(s.outro||'')}
           </div>
           
-          <div class="p-5 bg-black/40 rounded-xl border border-white/[0.04] text-xs text-gray-400">
-            <strong class="text-white block mb-1.5 font-semibold">YT Video Description Draft:</strong>
+          <div class="p-5 bg-white/60 rounded-xl border border-black/[0.04] text-xs text-slate-600 shadow-sm">
+            <strong class="text-slate-800 block mb-1.5 font-semibold">YT Video Description Draft:</strong>
             ${escapeHtml(s.description||'')}
           </div>
           ${performSEOAudit('script')}
@@ -1218,33 +1260,33 @@
     } else if(activeTab === 'social' && lastResult.social){
       const soc = lastResult.social;
       const tweets = (soc.twitterThread||[]).map((t, idx) => `
-        <div class="p-5 bg-black/40 rounded-xl border border-white/[0.04] text-xs leading-relaxed text-gray-200">
-          <span class="block text-[9px] font-mono text-gray-600 mb-2 uppercase tracking-wider">TWEET ${idx+1} / ${soc.twitterThread.length}</span>
+        <div class="p-5 bg-white/60 rounded-xl border border-black/[0.04] text-xs leading-relaxed text-slate-700 shadow-sm">
+          <span class="block text-[9px] font-mono text-slate-400 mb-2 uppercase tracking-wider">TWEET ${idx+1} / ${soc.twitterThread.length}</span>
           ${escapeHtml(t)}
         </div>
       `).join('');
 
       body.innerHTML = `
         <div class="space-y-6">
-          <div class="result-head flex justify-between items-start gap-4 pb-6 border-b border-white/[0.04]">
+          <div class="result-head flex justify-between items-start gap-4 pb-6 border-b border-black/[0.04]">
             <div>
-              <div class="result-title text-2xl font-bold text-white mb-1 display-font">Social Distribution Channels</div>
-              <div class="result-meta text-xs text-gray-400">Optimized structural post copy maps for networks discovery models.</div>
+              <div class="result-title text-2xl font-bold text-slate-800 mb-1 display-font">Social Distribution Channels</div>
+              <div class="result-meta text-xs text-slate-500">Optimized structural post copy maps for discovery models.</div>
             </div>
             <div class="result-actions flex gap-2">
-              <button class="icon-btn w-9 h-9 rounded-lg border border-white/10 hover:border-white/30 flex items-center justify-center text-xs text-gray-400 hover:text-white transition-all" title="Copy Raw Text" onclick="copyText('social')">⧉</button>
-              <button class="icon-btn w-9 h-9 rounded-lg border border-white/10 hover:border-white/30 flex items-center justify-center text-xs text-gray-400 hover:text-white transition-all" title="Download Plaintext" onclick="downloadText('social')">⬇</button>
+              <button class="icon-btn w-9 h-9 rounded-lg border border-black/10 hover:border-black/30 flex items-center justify-center text-xs text-slate-500 hover:text-black transition-all" title="Copy Raw Text" onclick="copyText('social')">⧉</button>
+              <button class="icon-btn w-9 h-9 rounded-lg border border-black/10 hover:border-black/30 flex items-center justify-center text-xs text-slate-500 hover:text-black transition-all" title="Download Plaintext" onclick="downloadText('social')">⬇</button>
             </div>
           </div>
           ${ttsControlTemplate}
           
           <div class="space-y-6">
             <div class="space-y-2">
-              <h4 class="text-xs font-mono uppercase text-gray-400 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#a855f7]"></span> LinkedIn Professional Post</h4>
-              <div class="p-5 bg-black/40 rounded-xl border border-white/[0.04] text-xs leading-relaxed text-gray-200 whitespace-pre-wrap">${escapeHtml(soc.linkedin)}</div>
+              <h4 class="text-xs font-mono uppercase text-slate-500 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#7c3aed]"></span> LinkedIn Professional Post</h4>
+              <div class="p-5 bg-white/60 rounded-xl border border-black/[0.04] text-xs leading-relaxed text-slate-700 whitespace-pre-wrap shadow-sm">${escapeHtml(soc.linkedin)}</div>
             </div>
             <div class="space-y-2">
-              <h4 class="text-xs font-mono uppercase text-gray-400 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#3ddc97]"></span> Twitter / X Sequential Thread</h4>
+              <h4 class="text-xs font-mono uppercase text-slate-500 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#059669]"></span> Twitter / X Sequential Thread</h4>
               <div class="space-y-3">
                 ${tweets}
               </div>
@@ -1260,25 +1302,23 @@
 
       body.innerHTML = `
         <div class="space-y-6">
-          <div class="result-head flex justify-between items-start gap-4 pb-6 border-b border-white/[0.04]">
+          <div class="result-head flex justify-between items-start gap-4 pb-6 border-b border-black/[0.04]">
             <div>
-              <div class="result-title text-2xl font-bold text-white mb-1 display-font">🎨 AI Media Studio</div>
-              <div class="result-meta text-xs text-gray-400">Generate campaign graphics, featured banners, and thumb guides.</div>
+              <div class="result-title text-2xl font-bold text-slate-800 mb-1 display-font">🎨 AI Media Studio</div>
+              <div class="result-meta text-xs text-slate-500">Generate campaign graphics, featured banners, and thumb guides.</div>
             </div>
           </div>
 
-          <!-- Studio input settings -->
-          <div class="p-5 bg-[#07070f] rounded-xl border border-white/[0.04] space-y-4">
+          <div class="p-5 bg-white/60 rounded-xl border border-black/[0.04] space-y-4 shadow-sm">
             <div>
-              <label class="block text-xs text-gray-400 mb-2 font-mono">Visual Asset Generative Prompt</label>
-              <input type="text" id="imagePromptInput" class="workspace-input py-2.5 text-xs text-white" value="${defaultPrompt}">
+              <label class="block text-xs text-slate-500 mb-2 font-mono">Visual Asset Generative Prompt</label>
+              <input type="text" id="imagePromptInput" class="workspace-input py-2.5 text-xs text-slate-800 focus:outline-none" value="${defaultPrompt}">
             </div>
-            <button class="w-full py-3 bg-[#a855f7] hover:bg-[#a855f7]/90 text-white font-bold text-xs rounded-lg transition-all" onclick="triggerImagenEngine()">
-              🖼️ Generate Studio Cover Banner
+            <button class="w-full py-3 bg-[#7c3aed] hover:bg-[#7c3aed]/90 text-white font-bold text-xs rounded-lg transition-all" onclick="triggerImagenEngine()">
+              🖼&nbsp;&nbsp;Generate Studio Cover Banner
             </button>
           </div>
 
-          <!-- Studio asset wrapper visual frame -->
           <div id="generativeArtCanvasWrapper"></div>
         </div>
       `;
@@ -1286,6 +1326,7 @@
     }
   }
 
+  /* ---------------- DRAFT VAULTS STORAGE ---------------- */
   function getDraftVault() {
     try {
       return JSON.parse(localStorage.getItem('genify_drafts_vault')) || [];
@@ -1348,15 +1389,15 @@
 
     const vault = getDraftVault();
     if(vault.length === 0) {
-      list.innerHTML = `<div class="text-xs text-gray-500 text-center py-4">No drafts saved locally.</div>`;
+      list.innerHTML = `<div class="text-xs text-slate-400 text-center py-4">No drafts saved locally.</div>`;
       return;
     }
 
     list.innerHTML = vault.map(x => `
-      <div onclick="loadVaultItem('${x.id}')" class="flex justify-between items-center px-3.5 py-2.5 bg-[#07070f] border border-white/[0.04] hover:border-white/[0.08] rounded-lg cursor-pointer transition-all group">
+      <div onclick="loadVaultItem('${x.id}')" class="flex justify-between items-center px-3.5 py-2.5 bg-white/60 border border-black/[0.04] hover:border-black/[0.08] rounded-lg cursor-pointer transition-all group shadow-sm">
         <div class="flex-1 min-w-0 pr-2">
-          <span class="block text-xs font-bold text-gray-300 truncate">${escapeHtml(x.title)}</span>
-          <span class="block text-[10px] text-gray-500 font-mono mt-0.5">${x.timestamp}</span>
+          <span class="block text-xs font-bold text-slate-700 truncate">${escapeHtml(x.title)}</span>
+          <span class="block text-[10px] text-slate-400 font-mono mt-0.5">${x.timestamp}</span>
         </div>
         <button onclick="deleteVaultItem('${x.id}', event)" class="text-xs text-red-500 hover:text-red-400 font-mono opacity-0 group-hover:opacity-100 transition-all">✖</button>
       </div>
@@ -1420,6 +1461,42 @@
     URL.revokeObjectURL(url);
   }
 
+  /* ---------------- COGNITIVE SCHEMATICS Fallbacks ---------------- */
+  function getMockResponse(source, wantBlog, wantScript, wantSocial, tone, lengthLabel) {
+    const defaultTopic = source ? source.slice(0, 60) + "..." : "your campaign topic";
+    return {
+      blog: wantBlog ? {
+        title: `The Ultimate Practical Guide to ${defaultTopic}`,
+        metaDescription: `Discover the top frameworks and practical systems to streamline ${defaultTopic} today.`,
+        readTime: "5 min read",
+        tags: ["guide", "strategy", "productivity", tone],
+        content: `## Introduction to the Process\n\nWhen optimizing **${defaultTopic}**, content workflow is the critical factor. Having a detailed draft strategy ensures that your campaign scales efficiently.\n\n### Strategic Pillars\n\n- **Quality Frameworks:** Keep sections structured logically to solve real-world user queries.\n- **Search Adaptability:** Leverage clear meta metrics so engines crawl and read your content efficiently.\n- **Active Audiences:** Map narrations directly to high-impact focal points.\n\n## Action Steps\n\nBegin by structuring your core campaign seeds and validating each asset consecutively.`
+      } : null,
+      script: wantScript ? {
+        title: `The Secret Formula Behind ${defaultTopic}`,
+        duration: "~6 minutes",
+        tags: ["tutorial", "production", tone],
+        hook: `Stop doing it the hard way. Today, we are breaking down the exact system to master ${defaultTopic} in record time.`,
+        sections: [
+          { timestamp: "0:00", narration: "What is going on everyone. Today we are unpacking a critical framework change that makes a huge difference.", visual: "Talking head shot of the host gesturing with modern workspace backdrops." },
+          { timestamp: "1:45", narration: "Let's pull up the timeline layout. Notice how the visual pipelines connect perfectly to our guidelines.", visual: "Cut to high-definition screen recording walking through the main setups." }
+        ],
+        outro: "Thanks for watching! Smash that subscribe button if this helped, and I'll see you in the next breakdown.",
+        description: `Unpack the complete step-by-step breakdown of ${defaultTopic}. Avoid the typical speedbumps most teams hit starting out.`,
+        tags: ["how-to", "automation", tone]
+      } : null,
+      social: wantSocial ? {
+        linkedin: `🚀 Ready to scale your next campaign outline? We just mapped the ultimate strategy for ${defaultTopic}.\n\nHere is how we split our processes to concurrently drive web, script, and visual channels with maximum efficiency.\n\n💡 Read the complete system checklist below and let us know your thoughts!\n\n#marketing #productivity #strategy`,
+        twitterThread: [
+          `1/ Let's talk about mapping out campaigns for ${defaultTopic}. Doing this manually is a huge bottleneck. Here is a faster way. 👇`,
+          `2/ First: Start with a clear raw content seed. The more technical detail you capture early, the better your outputs.`,
+          `3/ Second: Split your distribution maps. Draft blogs for SEO structure, and scripts for direct audience engagement at the same time.`
+        ]
+      } : null
+    };
+  }
+
+  /* ---------------- HIGH-PERFORMANCE MULTI-ROUTER GENERATION ---------------- */
   async function generateContent(){
     const source = document.getElementById('sourceText').value.trim();
     const tone = document.getElementById('toneSelect').value;
@@ -1432,7 +1509,7 @@
 
     if(!source){
       const body = document.getElementById('outputBody');
-      body.innerHTML = `<div class="error-state text-xs p-4 bg-red-950/20 text-red-400 border border-red-900/30 rounded-xl">Add some website content or a topic before generating.</div>`;
+      body.innerHTML = `<div class="error-state text-xs p-4 bg-red-50 text-red-600 border border-red-200 rounded-xl shadow-sm">Add some website content or a topic before generating.</div>`;
       document.getElementById('sourceText').focus();
       return;
     }
@@ -1450,9 +1527,13 @@
     const lengthLabel = {short:'short, roughly 500 words', medium:'medium length, roughly 900 words', long:'long, roughly 1400 words'}[length];
     const runtimeLabel = {short:'a 2–3 minute video', medium:'a 5–7 minute video', long:'a 10+ minute video'}[length];
 
-    if(!API_KEY) {
+    // Read keys
+    const activeKey = GLOBAL_API_KEY || localStorage.getItem('genify_gemini_key') || '';
+
+    if(!activeKey) {
+      // Graceful Sandbox Onboarding
       setTimeout(() => {
-        const parsed = getMockResponse(source, wantBlog, wantScript, tone, lengthLabel);
+        const parsed = getMockResponse(source, wantBlog, wantScript, wantSocial, tone, lengthLabel);
         parsed.media = { exists: true };
         
         clearLoadingInterval();
@@ -1466,13 +1547,14 @@
         document.getElementById('saveSessionBtn').disabled = false;
 
         const alertBox = document.createElement('div');
-        alertBox.className = "p-4 bg-[#3ddc97]/5 border border-[#3ddc97]/20 rounded-xl text-xs text-[#3ddc97] mt-5 font-mono";
-        alertBox.innerHTML = "✨ <strong>Sandbox Demo Mode.</strong> Connect your secure Google Gemini API Key by clicking the gear icon ⚙️ below to activate real campaign generation workflows.";
+        alertBox.className = "p-4 bg-orange-50 border border-orange-200 rounded-xl text-xs text-orange-800 mt-5 font-mono shadow-sm";
+        alertBox.innerHTML = "✨ <strong>Sandbox Demo Mode.</strong> Connect your secure Google Gemini API Key by clicking the gear icon ⚙️ below, or configure the <code class='bg-orange-100 px-1 py-0.5 rounded font-mono text-[#ff5a36]'>GLOBAL_API_KEY</code> constant in your HTML file to activate real campaign generation workflows.";
         document.getElementById('outputBody').appendChild(alertBox);
       }, 2500);
       return;
     }
 
+    // Build Payload schemas
     const schemaProperties = {};
     const schemaRequired = [];
 
@@ -1534,13 +1616,14 @@
     const systemPrompt = `You are Genify AI, an expert content strategist. Draft highly detailed, non-generic campaigns in the language: ${lang}. Based closely on the source. Tone: ${tone}. Blog Length: ${lengthLabel}. YouTube runtime: ${runtimeLabel}.${keyword ? ` Naturally optimize for target keyword: "${keyword}".` : ''}`;
     const userPrompt = `Source text: ${source}`;
 
-    let attempts = 0;
-    const maxAttempts = 3;
+    // Array of Gemini Models to try in sequence to bypass individual regional issues on live Netlify deployments
+    const targetModels = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.0-flash"];
     let success = false;
 
-    while (attempts < maxAttempts && !success) {
+    for (let modelIndex = 0; modelIndex < targetModels.length && !success; modelIndex++) {
+      const currentModelName = targetModels[modelIndex];
       try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${currentModelName}:generateContent?key=${activeKey}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -1558,12 +1641,12 @@
         });
 
         if (!response.ok) {
-          throw new Error(`Gemini Engine returned HTTP ${response.status}`);
+          throw new Error(`Model ${currentModelName} returned HTTP ${response.status}`);
         }
 
         const data = await response.json();
         const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!responseText) throw new Error("No payload content.");
+        if (!responseText) throw new Error("Empty model output.");
 
         const parsed = JSON.parse(responseText.trim());
         clearLoadingInterval();
@@ -1582,17 +1665,21 @@
         document.getElementById('saveSessionBtn').disabled = false;
 
       } catch (err) {
-        attempts++;
-        if (attempts >= maxAttempts) {
+        console.warn(`Attempt with ${currentModelName} failed: ${err.message}`);
+        if (modelIndex === targetModels.length - 1) {
+          // If all Gemini Models failed on Netlify, run procedural generation so visitors never crash!
           clearLoadingInterval();
-          document.getElementById('outputBody').innerHTML = `
-            <div class="error-state text-xs p-4 bg-red-950/20 text-red-400 border border-red-900/30 rounded-xl">
-              Unable to execute LLM request: ${escapeHtml(err.message)}.<br><br>
-              Check your Google Gemini key setting parameters or retry later.
-            </div>
-          `;
-        } else {
-          await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempts)));
+          const parsed = getMockResponse(source, wantBlog, wantScript, wantSocial, tone, lengthLabel);
+          parsed.media = { exists: true };
+          lastResult = parsed;
+          activeTab = lastResult.blog ? 'blog' : (lastResult.script ? 'script' : 'social');
+          updateTabs();
+          renderActive();
+          
+          const errorMsg = document.createElement('div');
+          errorMsg.className = "p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 mt-5 font-mono shadow-sm";
+          errorMsg.innerHTML = `⚠️ <strong>Procedural Failover System Triggered.</strong> The Gemini API endpoint rejected the keys or parameters: <code class="bg-amber-100 px-1 py-0.5 rounded text-amber-900 font-mono">${err.message}</code>. A high-fidelity simulated draft suite has been successfully constructed in its place!`;
+          document.getElementById('outputBody').appendChild(errorMsg);
         }
       }
     }
